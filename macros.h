@@ -33,6 +33,7 @@ struct macro_set_entry {
         struct macro *m;
 };
 
+char *expand_macros_by_type(char *input, int type);
 char *expand_macros(char *input);
 
 void init_macros(void);

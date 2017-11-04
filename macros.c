@@ -25,13 +25,12 @@
 #include "macros.h"
 #include "arraysize.h"
 
-#if 0
-struct macro {
-	char *name;
-	int nalts;
-	char *alt[0];
+struct macro_expansion_type = {
+	char begin;
+	char end;
 };
-#endif
+
+static struct macro_expansion_type macro_type[256]; /* indexed by open char '{' or '[' */
 
 char *intro[] = {
 	"[beginning], [peaceful-happening] and [peaceful-happening]. "
@@ -549,13 +548,13 @@ void remove_macro(char *setname, char *name, char *alt)
 	}
 }
 
-static char *find_matching_close_bracket(char *s)
+static char *find_matching_close_bracket(char *s, int type)
 {
 	int count = 0;
 	for (; *s != '\0'; s++) {
-		if (*s == '[')
+		if (*s == macro_type[type].begin)
 			count++;
-		if (*s == ']')
+		if (*s == macro_type[type].end)
 			count--;
 		if (count == 0)
 			return s;
@@ -579,20 +578,20 @@ static char *substitute(char *input)
 	return strdup(input);
 }
 
-char *expand_macros(char *input)
+char *expand_macros_by_type(char *input, int type)
 {
-	char *open_bracket = index(input, '[');
+	char *open_bracket = index(input, macro_type[type].begin);
 	char *beginning, *middle, *expanded_middle, *ending, *whole;
 
 	if (!open_bracket) {
 		char *e, *sub = substitute(input);
-		if (!index(sub, '['))
+		if (!index(sub, macro_type[type].begin))
 			return sub;
-		e = expand_macros(sub);
+		e = expand_macros_by_type(sub, type);
 		free(sub);
 		return e;
 	}
-	char *close_bracket = find_matching_close_bracket(open_bracket);
+	char *close_bracket = find_matching_close_bracket(open_bracket, type);
 	if (!close_bracket)
 		return strdup(input);
 	int len = open_bracket - input;
@@ -608,7 +607,7 @@ char *expand_macros(char *input)
 	middle = malloc(len + 1);
 	strncpy(middle, open_bracket + 1, len);
 	middle[len] = '\0';
-	expanded_middle = expand_macros(middle);
+	expanded_middle = expand_macros_by_type(middle, type);
 	free(middle);
 	whole = malloc(strlen(beginning) + strlen(expanded_middle) + strlen(ending) + 1);	
 	sprintf(whole, "%s%s%s", beginning, expanded_middle, ending);
@@ -618,9 +617,19 @@ char *expand_macros(char *input)
 	return whole;
 }
 
+char *expand_macros(char *input)
+{
+	return expand_macros_by_type(input, '[');
+}
+
 void init_macros(void)
 {
 	int i, j, k;
+
+	macro_type['{'].begin = '{';
+	macro_type['{'].end = '}';
+	macro_type['['].begin = '[';
+	macro_type['['].end = ']';
 
 	add_macro_set("common_words");
 
