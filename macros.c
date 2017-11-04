@@ -139,7 +139,6 @@ char *strongdrink[] = {
 	"vodka",
 	"tequila",
 	"cocktail",
-	"shot of whiskey",
 	"martini",
 };
 
@@ -603,11 +602,11 @@ static char *drinking_vessel[] = {
 };
 
 static char *spacedrink[] = {
-	"a [drinking_vessel] of [planetary_origin] [simplespacedrink]",
-	"a [planetary_origin] [simplespacedrink]",
-	"a [drinking_vessel] of [simplespacedrink]",
-	"a [simplespacedrink] in a [drinking_vessel]",
-	"a [simplespacedrink]",
+	"[drinking_vessel] of [planetary_origin] [simplespacedrink]",
+	"[planetary_origin] [simplespacedrink]",
+	"[drinking_vessel] of [simplespacedrink]",
+	"[simplespacedrink] in a [drinking_vessel]",
+	"[simplespacedrink]",
 };
 
 static char *planetary_origin[] = {
@@ -633,7 +632,7 @@ static char *space_locale[] = {
 	"the neutral zone",
 	"the [planetary_origin] nebula",
 	"the far side of the [planetary_origin] formation",
-	"a little known planet in colonies",
+	"a little known planet in the colonies",
 };
 
 static char *alien_type[] = {
@@ -885,15 +884,27 @@ static char *luxurious_spaceship_cabin[] = {
 static char *spaceship_interior1[] = {
 };
 
+static char *sat_at_the_bar[] = {
+	"sat at the bar",
+	"leaned on the bar",
+	"slumped at the bar",
+	"farted at the bar",
+	"eyed the room with suspicion", 
+	"listened to the music", 
+	"sat at the bar, smoking", 
+	"tried to get the bartender's attention", 
+};
+
 static char *bar_char[] = {
-	"a [body_size] [planetary_origin] [alien_type] with [alien_appendages] covered with [alien_skin] and [alien_eyes] [drinking] a [spacedrink]",
-	"[drinking] a [spacedrink], a [body_size] [alien_type] from [space_locale] with [alien_eyes] and [alien_appendages] covered with [alien_skin]",
+	"a [body_size] [planetary_origin] [alien_type] [drinking] a [spacedrink] [sat_at_the_bar]",
+	"a [planetary_origin] [alien_type] with [alien_appendages] covered with [alien_skin] and [alien_eyes] [drinking] a [spacedrink] [sat_at_the_bar]",
+	"[drinking] a [spacedrink], a [body_size] [alien_type] from [space_locale] [sat_at_the_bar]",
 };
 
 static char *spaceport_bar1[] = {
-	"It was dimly lit in the. As [p1p] eyes adjusted to the light, [p1] could make out "
-	"a variety of characters seated at the bar. Closest, [bar_char]. Next, [bar_char]. "
-	"Then, [bar_char]. A rough crowd.",
+	"It was dimly lit in the spaceport bar. As [p1p] eyes adjusted to the light, [p1] could make out "
+	"a variety of characters seated at the bar. Closest [bar_char]. Next, [bar_char]. "
+	"Finally, [bar_char]. A rough crowd.",
 };
 
 static char *spaceship_interior[] = {
@@ -918,6 +929,7 @@ static struct macro settings[] = {
 	{ "spaceship_interior", ARRAYSIZE(spaceship_interior), spaceship_interior },
 	{ "spaceport_bar1", ARRAYSIZE(spaceport_bar1), spaceport_bar1 },
 	{ "bar_char", ARRAYSIZE(bar_char), bar_char },
+	{ "sat_at_the_bar", ARRAYSIZE(sat_at_the_bar), sat_at_the_bar },
 	{ "luxurious_spaceship_cabin", ARRAYSIZE(luxurious_spaceship_cabin), luxurious_spaceship_cabin },
 };
 

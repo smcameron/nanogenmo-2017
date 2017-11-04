@@ -111,6 +111,35 @@ static void generate_characters(void)
 	printf("\n");
 }
 
+/* param should be "p1" or "p2", role should be "hero", or "antagonist" */
+void teardown_character_param(char *param, char *role)
+{
+	char p[100];
+	sprintf(p, "%s", param);
+	clear_macro("common_words", p); /* "p1", "[hero]" */
+	sprintf(p, "%spp", param);
+	clear_macro("common_words", p); /* "p1pp", "[heropp]" */
+	sprintf(p, "%sp", param);
+	clear_macro("common_words", p); /* "p1p", "[herop]" */
+	sprintf(p, "%sself", param);
+	clear_macro("common_words", p); /* "p1self", "[heroself]" */
+}
+
+/* param should be "p1" or "p2", role should be "hero", or "antagonist" */
+void setup_character_param(char *param, char *role)
+{
+	char p[100], r[100];
+	teardown_character_param(param, role);
+	sprintf(p, "%s", param); sprintf(r, "[%s]", role);
+	add_macro("common_words", p, r); /* "p1", "[hero]" */
+	sprintf(p, "%spp", param); sprintf(r, "[%spp]", role);
+	add_macro("common_words", p, r); /* "p1pp", "[heropp]" */
+	sprintf(p, "%sp", param); sprintf(r, "[%sp]", role);
+	add_macro("common_words", p, r); /* "p1p", "[herop]" */
+	sprintf(p, "%sself", param); sprintf(r, "[%sself]", role);
+	add_macro("common_words", p, r); /* "p1self", "[heroself]" */
+}
+
 void introduction(void)
 {
 	print("Introduction\n\n");
@@ -121,6 +150,8 @@ void introduction(void)
 void ordinary_world(void)
 {
 	print("The Ordinary World\n\n");
+	setup_character_param("p1", "hero");
+	setup_character_param("p2", "antagonist");
 	char *setting = expand_macros_by_type("{setting}\n\n", '{');
 	print(setting);
 	print("[the-ordinary-world]\n\n");
@@ -149,14 +180,8 @@ void crossing_the_threshold(void)
 void tests_allies_and_enemies(void)
 {
 	print("Tests, Allies, and Enemies\n\n");
-	add_macro("common_words", "p1", "[hero]");
-	add_macro("common_words", "p1pp", "[heropp]");
-	add_macro("common_words", "p1p", "[hero3p]");
-	add_macro("common_words", "p1self", "[heroself]");
-	add_macro("common_words", "p2", "[antagonist]");
-	add_macro("common_words", "p2pp", "[antagonistpp]");
-	add_macro("common_words", "p2p", "[antagonist3p]");
-	add_macro("common_words", "p2self", "[antagonistself]");
+	setup_character_param("p1", "hero");
+	setup_character_param("p2", "antagonist");
 	print("[fight_scene]\n\n");
 }
 
@@ -197,12 +222,12 @@ int main(int argc, char *argv[])
 	generate_characters();
 	add_macro("common_words", "Hero", cast[0].firstname);
 	add_macro("common_words", "hero3", cast[0].third);
-	add_macro("common_words", "hero3p", cast[0].thirdp);
+	add_macro("common_words", "herop", cast[0].thirdp);
 	add_macro("common_words", "heroself", cast[0].thirdself);
 	add_macro("common_words", "heropp", cast[0].thirdpp);
 	add_macro("common_words", "antagonist", cast[1].firstname);
 	add_macro("common_words", "antagonist3", cast[1].third);
-	add_macro("common_words", "antagonist3p", cast[1].thirdp);
+	add_macro("common_words", "antagonistp", cast[1].thirdp);
 	add_macro("common_words", "antagonistpp", cast[1].thirdpp);
 	add_macro("common_words", "antagonistself", cast[1].thirdself);
 	randomize(0);
