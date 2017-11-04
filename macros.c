@@ -25,7 +25,7 @@
 #include "macros.h"
 #include "arraysize.h"
 
-struct macro_expansion_type = {
+struct macro_expansion_type {
 	char begin;
 	char end;
 };
@@ -40,7 +40,7 @@ char *intro[] = {
 	"to [steal] [hidden] [plan]s to the [foe]'s ultimate weapon, the "
 	"[ultimate] [ultimateweapon], an [ultimateweapon] with enough power to "
 	"[destroy] an entire [planet].  Pursued by the [foe]'s [evil] "
-	"agents, [hero] [flee]s home aboard her [spaceship], [custodian] "
+	"agents, [hero] [flee]s home aboard [hero3p] [spaceship], [custodian] "
 	"of the stolen [hidden] [plan]s that can save her people and restore freedom "
 	"to the galaxy....",
 };
@@ -293,6 +293,11 @@ char *flee[] = {
 	"retreat",
 };
 
+char *hero[] = {
+	"[Hero]", /* first name */
+	"[hero3]", /* he/she */
+};
+
 char *surnames[] = {
 #include "lastnames.h"
 };
@@ -388,7 +393,7 @@ char *herodreams[] = {
 	"[hero] [thinks about] travelling the galaxy", 
 	"[hero] [thinks about] where things went wrong", 
 	"[hero] [thinks about] how things could be better", 
-	"[hero] [thinks about] how to get life back together", 
+	"[hero] [thinks about] how to get [hero3p] life back together",
 };
 
 char *heroneedsjob[] = {
@@ -426,6 +431,58 @@ char *looks[] = {
 	"stares",
 	"looks",
 	"takes a look",
+};
+
+char *upholstered[] = {
+	"upholstered",
+	"covered",
+};
+
+char *gleaming[] = {
+	"gleaming",
+	"shining",
+	"shiny",
+	"sparkling",
+};
+
+char *spaceshipwalls[] = {
+	"walls of the ship",
+	"bulkheads",
+	"wall panels",
+};
+
+char *fancy_metal[] = {
+	"hyperdyne steelium",
+	"neutronic aluminum",
+	"titanium",
+	"gold plated hypersteel",
+	"a platinum-steel alloy",
+};
+
+char *luxurious[] = {
+	"luxurious",
+	"opulent",
+	"decadent",
+	"exquisite",
+	"expensive",
+	"sumptuous",
+	"splendid",
+	"magnificent",
+	"extravagant",
+	"fancy",
+};
+
+char *animal_hide[] = {
+	"leather",
+	"soft leather",
+	"hide of Arcturan space whales",
+	"skins of Norkunian tigerbats",
+	"animal hides from all over the galaxy",
+};
+
+char *beautiful_space_view[] = {
+	"beautiful view of the planet below",
+	"beautiful view of the distant stars outside",
 };
 
 struct macro common_words[] = {
@@ -474,6 +531,45 @@ struct macro common_words[] = {
 	{ "herowantsadventure",  ARRAYSIZE(herowantsadventure), herowantsadventure },
 	{ "wants", ARRAYSIZE(wants), wants },
 	{ "adventureidea", ARRAYSIZE(adventureidea), adventureidea },
+	{ "upholstered", ARRAYSIZE(upholstered), upholstered },
+	{ "luxurious", ARRAYSIZE(luxurious), luxurious },
+	{ "animal_hide", ARRAYSIZE(animal_hide), animal_hide },
+	{ "gleaming", ARRAYSIZE(gleaming), gleaming },
+	{ "spaceshipwalls", ARRAYSIZE(spaceshipwalls), spaceshipwalls },
+	{ "beautiful_space_view", ARRAYSIZE(beautiful_space_view), beautiful_space_view },
+	{ "fancy_metal", ARRAYSIZE(fancy_metal), fancy_metal },
+	{ "hero", ARRAYSIZE(hero), hero },
+};
+
+static char *luxurious_spaceship_cabin[] = {
+	"The chairs in the cabin of the [spaceship] were [upholstered] in [luxurious] [animal_hide]. "
+	"The [spaceshipwalls] were made of [fancy_metal]. A [gleaming] console was "
+	"located near the front of the room. A large viewscreen afforded a [beautiful_space_view].",
+};
+
+static char *spaceship_interior1[] = {
+};
+
+static char *spaceship_interior[] = {
+	"{luxurious_spaceship_cabin}",
+#if 0
+	"{military_spaceship_cabin}",
+	"{cargo_spaceship_cabin}",
+	"{pirate_spaceship_cabin}",
+#endif
+};
+
+static char *setting[] = {
+	"{spaceship_interior}",
+#if 0
+	"{spaceship_crash_site}",
+#endif
+};
+
+static struct macro settings[] = {
+	{ "setting", ARRAYSIZE(setting), setting },
+	{ "spaceship_interior", ARRAYSIZE(spaceship_interior), spaceship_interior },
+	{ "luxurious_spaceship_cabin", ARRAYSIZE(luxurious_spaceship_cabin), luxurious_spaceship_cabin },
 };
 
 static struct macro_set_entry *macro_set = NULL;
@@ -622,6 +718,15 @@ char *expand_macros(char *input)
 	return expand_macros_by_type(input, '[');
 }
 
+static void add_static_macro_set(char *setname, struct macro *m, int nmacros)
+{
+	int i, j;
+	add_macro_set(setname);
+	for (i = 0; i < nmacros; i++)
+		for (j = 0; j < m[i].nalts; j++)
+			add_macro(setname, m[i].name, m[i].alt[j]);
+}
+
 void init_macros(void)
 {
 	int i, j, k;
@@ -631,9 +736,6 @@ void init_macros(void)
 	macro_type['['].begin = '[';
 	macro_type['['].end = ']';
 
-	add_macro_set("common_words");
-
-	for (i = 0; i < ARRAYSIZE(common_words); i++)
-		for (j = 0; j < common_words[i].nalts; j++)
-			add_macro("common_words", common_words[i].name, common_words[i].alt[j]);
+	add_static_macro_set("common_words", common_words, ARRAYSIZE(common_words));
+	add_static_macro_set("settings", settings, ARRAYSIZE(settings));
 }

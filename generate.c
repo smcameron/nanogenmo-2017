@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/time.h>
 #include <ctype.h>
 
@@ -33,6 +34,9 @@ struct character {
 	char *middlename;
 	char *lastname;
 	char *title;
+	char *third;
+	char *Third;
+	char *thirdp;
 	int sex;
 } cast[MAXCHARS];
 int nchars = 0;
@@ -68,9 +72,15 @@ static void generate_character(struct character *c)
 	if (c->sex) {
 		c->firstname = expand_macros("[male-firstname]"); 
 		c->middlename = expand_macros("[male-firstname]"); 
+		c->third = strdup("he");
+		c->thirdp = strdup("his");
+		c->Third = strdup("He");
 	} else {
 		c->firstname = expand_macros("[female-firstname]"); 
 		c->middlename = expand_macros("[female-firstname]"); 
+		c->third = strdup("she");
+		c->thirdp = strdup("her");
+		c->Third = strdup("She");
 	}
 	fixup_name_case(c->firstname);
 	fixup_name_case(c->middlename);
@@ -99,6 +109,8 @@ void introduction(void)
 {
 	print("Introduction\n\n");
 	print("[intro]\n\n");
+	char *setting = expand_macros_by_type("{setting}\n\n", '{');
+	print(setting);
 }
 
 void ordinary_world(void)
@@ -167,6 +179,9 @@ int main(int argc, char *argv[])
 	init_macros();
 	randomize(714882);
 	generate_characters();
+	add_macro("common_words", "Hero", cast[0].firstname);
+	add_macro("common_words", "hero3", cast[0].third);
+	add_macro("common_words", "hero3p", cast[0].thirdp);
 	randomize(0);
 	/* Let's try modelling after Joseph Campbell's Hero's Journey */
 	introduction();
