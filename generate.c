@@ -24,11 +24,12 @@
 #include <string.h>
 #include <sys/time.h>
 #include <ctype.h>
+#include <math.h>
 
 #include "macros.h"
 #include "print.h"
 
-#define MAXCHARS 10
+#define MAXCHARS 3
 struct character {
 	char *firstname;
 	char *middlename;
@@ -40,8 +41,88 @@ struct character {
 	char *thirdpp;
 	char *thirdself;
 	int sex;
+	int location;
+	int introduced_yet;
 } cast[MAXCHARS];
 int nchars = 0;
+
+/* Connections between locations */
+struct connection {
+	char *via; /* e.g. horseback, landspeeder, spaceship, walking, etc. */
+	int from, to;
+};
+
+#define MAX_CONNECTIONS 100
+#define MAX_LOCATIONS 100
+#define MAX_SPACESHIPS 4
+#define NLOCS_PER_PLANET 4
+struct location {
+	char *name;
+	char *description;
+	struct connection connection[MAX_CONNECTIONS];
+	int nconnections;
+	float x, y, z; /* location used for calculating distances/proximity */
+	int planet; /* what planet this location is on */
+#define LOCATION_TYPE_SPACESHIP 0
+#define LOCATION_TYPE_PLANETARY 1
+	int type;
+} location[MAX_LOCATIONS];
+int nlocations = 0;
+
+/* These planets are very shallow, just groupings to associate locations */
+#define MAX_PLANETS 5
+#define MIN_PLANET_SEPARATION 3000.0
+struct planet {
+	char *name;
+	float x, y, z;
+} planet[MAX_PLANETS];
+int nplanets;
+
+static void generate_planets(void)
+{
+	int i, j, too_close;
+	float dist, x, y, z;
+	char name[100];
+
+	nplanets = 0;
+	for (i = 0; i < MAX_PLANETS; i++) {
+		do {
+			x = 100000.0 * ((float) rand() / (float) RAND_MAX);
+			y = 100000.0 * ((float) rand() / (float) RAND_MAX);
+			z = 100000.0 * ((float) rand() / (float) RAND_MAX);
+			too_close = 0;
+			for (j = 0; j < nplanets; j++) {
+				float dx, dy, dz;
+				dx = x - planet[j].x;
+				dy = y - planet[j].y;
+				dz = z - planet[j].z;
+				dist = sqrt(dx * dx + dy * dy + dz * dz);
+				if (dist < MIN_PLANET_SEPARATION) {
+					too_close = 1;
+					break;
+				}
+			}
+		} while (too_close);
+		planet[i].x = x;
+		planet[i].y = y;
+		planet[i].z = z;
+		sprintf(name, "Planet %d", i); /* TODO: something better */
+		planet[i].name = strdup(name);
+		nplanets = i;
+	}
+}
+
+static void print_planets(void)
+{
+	int i;
+
+	printf("Planets:\n");
+	for (i = 0; i < nplanets; i++) {
+		printf("  Planet %d: %s, %f, %f, %f\n", i, planet[i].name,
+			planet[i].x, planet[i].y, planet[i].z);
+	}
+	printf("\n");
+}
 
 static void fixup_name_case(char *s)
 {
@@ -72,16 +153,16 @@ static void generate_character(struct character *c)
 	c->title = expand_macros("[character-title]");
 	c->sex = rand() % 2;
 	if (c->sex) {
-		c->firstname = expand_macros("[male-firstname]"); 
-		c->middlename = expand_macros("[male-firstname]"); 
+		c->firstname = expand_macros("[male-firstname]");
+		c->middlename = expand_macros("[male-firstname]");
 		c->third = strdup("he");
 		c->thirdp = strdup("his");
 		c->thirdpp = strdup("him");
 		c->thirdself = strdup("himself");
 		c->Third = strdup("He");
 	} else {
-		c->firstname = expand_macros("[female-firstname]"); 
-		c->middlename = expand_macros("[female-firstname]"); 
+		c->firstname = expand_macros("[female-firstname]");
+		c->middlename = expand_macros("[female-firstname]");
 		c->third = strdup("she");
 		c->thirdp = strdup("her");
 		c->thirdpp = strdup("her");
@@ -109,6 +190,119 @@ static void generate_characters(void)
 	for (i = 0; i < MAXCHARS; i++)
 		print_character(&cast[i]);
 	printf("\n");
+}
+
+static void generate_planetary_location(int planet_number)
+{
+	char name[100];
+
+	if (nlocations >= MAX_LOCATIONS)
+		return;
+	sprintf(name, "[planetary_location_name] %d", nlocations);
+	location[nlocations].name = expand_macros(name);
+	location[nlocations].description = expand_macros("[planetary_location_description]");
+	location[nlocations].x = planet[planet_number].x + 100.0 * ((double) rand() / (double) RAND_MAX);
+	location[nlocations].y = planet[planet_number].y + 100.0 * ((double) rand() / (double) RAND_MAX);
+	location[nlocations].z = planet[planet_number].z + 100.0 * ((double) rand() / (double) RAND_MAX);
+	location[nlocations].planet = planet_number;
+	location[nlocations].type = LOCATION_TYPE_PLANETARY;
+	location[nlocations].nconnections = 0;
+	nlocations++;
+}
+
+static void generate_spaceship_location(void)
+{
+	char name[100];
+	int p;
+
+	if (nlocations >= MAX_LOCATIONS)
+		return;
+	sprintf(name, "[spaceship_location_name] %d", nlocations);
+	location[nlocations].name = expand_macros(name);
+	location[nlocations].description = expand_macros("[spaceship_location_description]");
+	p = rand() % nplanets;
+	location[nlocations].x = planet[p].x + 100.0 * ((double) rand() / (double) RAND_MAX);
+	location[nlocations].y = planet[p].y + 100.0 * ((double) rand() / (double) RAND_MAX);
+	location[nlocations].z = planet[p].z + 100.0 * ((double) rand() / (double) RAND_MAX);
+	location[nlocations].planet = p;
+	location[nlocations].type = LOCATION_TYPE_SPACESHIP;
+	location[nlocations].nconnections = 0;
+	nlocations++;
+}
+
+static void generate_locations(void)
+{
+	int done = 0;
+	int i, j;
+	for (i = 0; i < nplanets; i++) {
+		for (j = 0; j < NLOCS_PER_PLANET; j++)
+			generate_planetary_location(i);
+	}
+	for (i = 0; i < MAX_SPACESHIPS; i++) {
+		generate_spaceship_location();
+	}
+}
+
+static void print_locations(void)
+{
+	int i;
+
+	for (i = 0; i < nlocations; i++) {
+		switch (location[i].type) {
+		case LOCATION_TYPE_PLANETARY:
+			printf("Location %d: planetary, %s, on planet %d, %s\n",
+				i, location[i].name, location[i].planet, location[i].description);
+			break;
+		case LOCATION_TYPE_SPACESHIP:
+			printf("Location %d: spaceship, %s, on planet %d, %s\n",
+				i, location[i].name, location[i].planet, location[i].description);
+			break;
+		default:
+			printf("Location %d: unknown type %d, %s, on planet %d, %s\n",
+				i, location[i].type, location[i].name, location[i].planet,  location[i].description);
+			break;
+		}
+	}
+}
+
+static void add_planetary_connection(int a, int b)
+{
+	char *via; /* e.g. horseback, landspeeder, spaceship, walking, etc. */
+	int from, to;
+	int n;
+
+	n = location[a].nconnections;
+	location[a].connection[n].to = b;
+	location[a].connection[n].from = a;
+	location[a].connection[n].via = expand_macros("[planetary_connection_via]");
+	location[a].nconnections++;
+	n = location[b].nconnections;
+	location[b].connection[n].to = a;
+	location[b].connection[n].from = b;
+	location[b].connection[n].via = expand_macros("[planetary_connection_via]");
+	location[b].nconnections++;
+}
+
+static void generate_location_connections(void)
+{
+	int i, j;
+	float dist, dx, dy, dz;
+
+	/* Connect all locations on the same planet together */
+	for (i = 0; i < nlocations; i++) {
+		if (location[i].type == LOCATION_TYPE_SPACESHIP)
+			continue;
+		for (j = 0; j < nlocations; j++) {
+			if (location[j].type == LOCATION_TYPE_SPACESHIP)
+				continue;
+			dx = location[i].x - location[j].x;
+			dy = location[i].y - location[j].y;
+			dz = location[i].z - location[j].z;
+			dist = sqrt(dx * dx + dy * dy + dz * dz);
+			if (dist < 1000.0)
+				add_planetary_connection(i, j);
+		}
+	}
 }
 
 /* param should be "p1" or "p2", role should be "hero", or "antagonist" */
@@ -143,7 +337,7 @@ void setup_character_param(char *param, char *role)
 void introduction(void)
 {
 	print("Introduction\n\n");
-	print("[intro]\n\n");
+	/* print("[intro]\n\n"); */
 
 }
 
@@ -157,26 +351,8 @@ void ordinary_world(void)
 	print("[the-ordinary-world]\n\n");
 }
 
-void call_to_adventure(void)
-{
-	print("The Call To Adventure\n\n");
-}
 
-void refusal_of_the_call(void)
-{
-	print("The Refusal of the Call\n\n");
-}
-
-void meeting_with_the_mentor(void)
-{
-	print("The Mentor\n\n");
-}
-
-void crossing_the_threshold(void)
-{
-	print("Crossing the Threshold\n\n");
-}
-
+#if 0
 void tests_allies_and_enemies(void)
 {
 	print("Tests, Allies, and Enemies\n\n");
@@ -184,42 +360,55 @@ void tests_allies_and_enemies(void)
 	setup_character_param("p2", "antagonist");
 	print("[fight_scene]\n\n");
 }
+#endif
 
-void approach_the_challenge(void)
+#define ACTION_MOVE 0
+#define ACTION_THINK 1
+#define MAX_ACTIONS 2
+void dont_just_stand_there_do_something(int i, int pov)
 {
-	print("The Approach of the Challenge\n\n");
+	int action;
+
+	action = rand() % MAX_ACTIONS;
+	switch (action) {
+	case ACTION_MOVE:
+		if (i == pov)
+			printf("%s chooses to move.\n", cast[i].firstname);
+		break;
+	case ACTION_THINK:
+		if (i == pov)
+			printf("%s chooses to think.\n", cast[i].firstname);
+		break;
+	default:
+		break;
+	}
 }
 
-void the_ordeal_and_confrontation(void)
+void simulate(void)
 {
-	print("The Ordeal and Confrontation\n\n");
-}
+#define MOVES 100
+#define MOVES_PER_CHAR 10
+	int i, j;
+	int pov = 0;
 
-void the_reward_and_danger(void)
-{
-	print("Rewards and Dangers\n\n");
-}
-
-void the_road_back(void)
-{
-	print("The Road Back\n\n");
-}
-
-void the_final_conflict()
-{
-	print("The Final Conflict\n\n");
-}
-
-void the_return_with_the_elixir(void)
-{
-	print("The Return with the Elixir\n\n");
+	for (i = 0; i < MOVES; i++) {
+		if ((i % MOVES_PER_CHAR) == 0)
+			pov = (pov + 1) % MAXCHARS;
+		for (j = 0; j < MAXCHARS; j++)
+			dont_just_stand_there_do_something(j, pov);
+	}
 }
 
 int main(int argc, char *argv[])
 {
 	init_macros();
-	randomize(71882);
+	randomize(0);
 	generate_characters();
+	generate_planets();
+	generate_locations();
+	generate_location_connections();
+	print_planets();
+	print_locations();
 	add_macro("common_words", "Hero", cast[0].firstname);
 	add_macro("common_words", "hero3", cast[0].third);
 	add_macro("common_words", "herop", cast[0].thirdp);
@@ -233,17 +422,6 @@ int main(int argc, char *argv[])
 	randomize(0);
 	/* Let's try modelling after Joseph Campbell's Hero's Journey */
 	introduction();
-	ordinary_world();
-	call_to_adventure();
-	refusal_of_the_call();
-	meeting_with_the_mentor();
-	crossing_the_threshold();
-	tests_allies_and_enemies();
-	approach_the_challenge();
-	the_ordeal_and_confrontation();
-	the_reward_and_danger();
-	the_road_back();
-	the_final_conflict();
-	the_return_with_the_elixir();
+	simulate();
 	return 0;
 }
