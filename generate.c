@@ -37,6 +37,8 @@ struct character {
 	char *third;
 	char *Third;
 	char *thirdp;
+	char *thirdpp;
+	char *thirdself;
 	int sex;
 } cast[MAXCHARS];
 int nchars = 0;
@@ -74,12 +76,16 @@ static void generate_character(struct character *c)
 		c->middlename = expand_macros("[male-firstname]"); 
 		c->third = strdup("he");
 		c->thirdp = strdup("his");
+		c->thirdpp = strdup("him");
+		c->thirdself = strdup("himself");
 		c->Third = strdup("He");
 	} else {
 		c->firstname = expand_macros("[female-firstname]"); 
 		c->middlename = expand_macros("[female-firstname]"); 
 		c->third = strdup("she");
 		c->thirdp = strdup("her");
+		c->thirdpp = strdup("her");
+		c->thirdself = strdup("herself");
 		c->Third = strdup("She");
 	}
 	fixup_name_case(c->firstname);
@@ -111,6 +117,16 @@ void introduction(void)
 	print("[intro]\n\n");
 	char *setting = expand_macros_by_type("{setting}\n\n", '{');
 	print(setting);
+
+	add_macro("common_words", "p1", "[hero]");
+	add_macro("common_words", "p1pp", "[heropp]");
+	add_macro("common_words", "p1p", "[hero3p]");
+	add_macro("common_words", "p1self", "[heroself]");
+	add_macro("common_words", "p2", "[antagonist]");
+	add_macro("common_words", "p2pp", "[antagonistpp]");
+	add_macro("common_words", "p2p", "[antagonist3p]");
+	add_macro("common_words", "p2self", "[antagonistself]");
+	print("\n\n[fight_scene]\n\n");
 }
 
 void ordinary_world(void)
@@ -177,11 +193,18 @@ void the_return_with_the_elixir(void)
 int main(int argc, char *argv[])
 {
 	init_macros();
-	randomize(714882);
+	randomize(71882);
 	generate_characters();
 	add_macro("common_words", "Hero", cast[0].firstname);
 	add_macro("common_words", "hero3", cast[0].third);
 	add_macro("common_words", "hero3p", cast[0].thirdp);
+	add_macro("common_words", "heroself", cast[0].thirdself);
+	add_macro("common_words", "heropp", cast[0].thirdpp);
+	add_macro("common_words", "antagonist", cast[1].firstname);
+	add_macro("common_words", "antagonist3", cast[1].third);
+	add_macro("common_words", "antagonist3p", cast[1].thirdp);
+	add_macro("common_words", "antagonistpp", cast[1].thirdpp);
+	add_macro("common_words", "antagonistself", cast[1].thirdself);
 	randomize(0);
 	/* Let's try modelling after Joseph Campbell's Hero's Journey */
 	introduction();

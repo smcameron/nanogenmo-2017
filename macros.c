@@ -41,7 +41,7 @@ char *intro[] = {
 	"[ultimate] [ultimateweapon], an [ultimateweapon] with enough power to "
 	"[destroy] an entire [planet].  Pursued by the [foe]'s [evil] "
 	"agents, [hero] [flee]s home aboard [hero3p] [spaceship], [custodian] "
-	"of the stolen [hidden] [plan]s that can save her people and restore freedom "
+	"of the stolen [hidden] [plan]s that can save [hero3p] people and restore freedom "
 	"to the galaxy....",
 };
 
@@ -480,9 +480,42 @@ char *animal_hide[] = {
 	"animal hides from all over the galaxy",
 };
 
+char *amazing[] = {
+	"beautiful",
+	"wonderful",
+	"amazing",
+	"astounding",
+	"breathtaking",
+	"stunning",
+	"staggering",
+	"awesome",
+	"impressive",
+	"wondrous",
+	"terrific",
+	"awe inspiring",
+};
+
 char *beautiful_space_view[] = {
-	"beautiful view of the planet below",
-	"beautiful view of the distant stars outside",
+	"[amazing] view of the planet below",
+	"[amazing] view of the distant stars outside",
+	"[amazing] view of the planet's moon",
+};
+
+static char *body_part[] = {
+	"head",
+	"back",
+	"leg",
+	"arm",
+	"wrist",
+	"stomach",
+	"belly",
+	"torso",
+	"chest",
+	"face",
+	"nose",
+	"mouth",
+	"eye",
+	"neck",
 };
 
 struct macro common_words[] = {
@@ -539,6 +572,90 @@ struct macro common_words[] = {
 	{ "beautiful_space_view", ARRAYSIZE(beautiful_space_view), beautiful_space_view },
 	{ "fancy_metal", ARRAYSIZE(fancy_metal), fancy_metal },
 	{ "hero", ARRAYSIZE(hero), hero },
+	{ "body_part", ARRAYSIZE(body_part), body_part },
+	{ "amazing", ARRAYSIZE(amazing), amazing },
+};
+
+static char *fight_action1[] = {
+	"lunged at",
+	"swung at",
+	"leaped on",
+	"grappled with",
+	"pushed",
+	"moved towards",
+	"backed away from",
+	"looked warily at",
+	"looked warily at",
+	"scowled at",
+	"carefully watched",
+	"looked for a weakness in",
+	"tried to figure out how to beat",
+	"tried to scramble away from",
+	"grabbed",
+};
+
+static char *fight_action2[] = {
+	"howled in pain",
+	"leaped to his feet",
+	"got up slowly",
+	"moved back",
+	"charged",
+	"fell to the ground",
+	"grimaced",
+	"groaned in pain",
+	"cried out in pain",
+	"breathed heavily",
+	"was breathing heavily",
+	"was getting tired",
+	"was in pain",
+	"was hurt",
+	"was bleeding",
+	"was out for blood",
+	"felt the anger rising",
+	"felt strong",
+	"felt the rush of adrenaline",
+	"drew a knife",
+	"drew a pistol",
+};
+
+static char *fight_action3[] = {
+	"struck at",
+	"reached for",
+	"pounded",
+	"hit",
+	"punched",
+	"shot at",
+	"fired at",
+	"aimed for",
+	"tried to hit",
+	"tried to punch",
+	"tried to strike",
+	"tried to stab",
+	"stabbed",
+	"kicked at",
+	"kicked",
+	"tried to kick",
+};
+
+static char *fight_sentence[] = {
+	"[p1] [fight_action1] [p2pp].",
+	"[p2] [fight_action1] [p1pp].",
+	"[p1] [fight_action2].",
+	"[p2] [fight_action2].",
+	"[p2] [fight_action3] [p1p] [body_part].",
+	"[p1] [fight_action3] [p2p] [body_part].",
+	"[p1] [fight_action3] [p2].",
+	"[p2] [fight_action3] [p1].",
+	"[p1] [fight_action3] [p2pp].",
+	"[p2] [fight_action3] [p1pp].",
+	"[p2] clenched [p2p] fists.",
+	"[p1] clenched [p1p] fists.",
+	"[p1] braced [p1self].",
+	"[p2] braced [p2self].",
+};
+
+static char *fight_scene[] = {
+	"[fight_sentence] [fight_sentence] [fight_sentence] [fight_sentence] [fight_sentence] [fight_sentence]",
 };
 
 static char *luxurious_spaceship_cabin[] = {
@@ -570,6 +687,14 @@ static struct macro settings[] = {
 	{ "setting", ARRAYSIZE(setting), setting },
 	{ "spaceship_interior", ARRAYSIZE(spaceship_interior), spaceship_interior },
 	{ "luxurious_spaceship_cabin", ARRAYSIZE(luxurious_spaceship_cabin), luxurious_spaceship_cabin },
+};
+
+static struct macro scenes[] = {
+	{ "fight_sentence", ARRAYSIZE(fight_sentence), fight_sentence },
+	{ "fight_action1", ARRAYSIZE(fight_action1), fight_action1 },
+	{ "fight_action2", ARRAYSIZE(fight_action2), fight_action2 },
+	{ "fight_action3", ARRAYSIZE(fight_action3), fight_action3 },
+	{ "fight_scene", ARRAYSIZE(fight_scene), fight_scene },
 };
 
 static struct macro_set_entry *macro_set = NULL;
@@ -738,4 +863,5 @@ void init_macros(void)
 
 	add_static_macro_set("common_words", common_words, ARRAYSIZE(common_words));
 	add_static_macro_set("settings", settings, ARRAYSIZE(settings));
+	add_static_macro_set("scenes", scenes, ARRAYSIZE(scenes));
 }
