@@ -115,23 +115,14 @@ void introduction(void)
 {
 	print("Introduction\n\n");
 	print("[intro]\n\n");
-	char *setting = expand_macros_by_type("{setting}\n\n", '{');
-	print(setting);
 
-	add_macro("common_words", "p1", "[hero]");
-	add_macro("common_words", "p1pp", "[heropp]");
-	add_macro("common_words", "p1p", "[hero3p]");
-	add_macro("common_words", "p1self", "[heroself]");
-	add_macro("common_words", "p2", "[antagonist]");
-	add_macro("common_words", "p2pp", "[antagonistpp]");
-	add_macro("common_words", "p2p", "[antagonist3p]");
-	add_macro("common_words", "p2self", "[antagonistself]");
-	print("\n\n[fight_scene]\n\n");
 }
 
 void ordinary_world(void)
 {
 	print("The Ordinary World\n\n");
+	char *setting = expand_macros_by_type("{setting}\n\n", '{');
+	print(setting);
 	print("[the-ordinary-world]\n\n");
 }
 
@@ -158,6 +149,15 @@ void crossing_the_threshold(void)
 void tests_allies_and_enemies(void)
 {
 	print("Tests, Allies, and Enemies\n\n");
+	add_macro("common_words", "p1", "[hero]");
+	add_macro("common_words", "p1pp", "[heropp]");
+	add_macro("common_words", "p1p", "[hero3p]");
+	add_macro("common_words", "p1self", "[heroself]");
+	add_macro("common_words", "p2", "[antagonist]");
+	add_macro("common_words", "p2pp", "[antagonistpp]");
+	add_macro("common_words", "p2p", "[antagonist3p]");
+	add_macro("common_words", "p2self", "[antagonistself]");
+	print("[fight_scene]\n\n");
 }
 
 void approach_the_challenge(void)

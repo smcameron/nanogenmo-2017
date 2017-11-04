@@ -138,7 +138,9 @@ char *strongdrink[] = {
 	"rum",
 	"vodka",
 	"tequila",
-	"cocktails",
+	"cocktail",
+	"shot of whiskey",
+	"martini",
 };
 
 char *plentiful[] = {
@@ -475,8 +477,8 @@ char *luxurious[] = {
 char *animal_hide[] = {
 	"leather",
 	"soft leather",
-	"hide of Arcturan space whales",
-	"skins of Norkunian tigerbats",
+	"hide of [planetary_origin] space whales",
+	"skins of [planetary_origin] tigerbats",
 	"animal hides from all over the galaxy",
 };
 
@@ -493,6 +495,15 @@ char *amazing[] = {
 	"wondrous",
 	"terrific",
 	"awe inspiring",
+};
+
+char *musical_instrument[] = {
+	"guitar",
+	"piano",
+	"flute",
+	"Arcturan lyre",
+	"subharmonic traumaphone",
+	"Gonkan windpipe",
 };
 
 char *beautiful_space_view[] = {
@@ -516,6 +527,197 @@ static char *body_part[] = {
 	"mouth",
 	"eye",
 	"neck",
+};
+
+static char *animal[] = {
+	"koala",
+	"elephant",
+	"leopard",
+	"frog",
+	"chihuahua",
+	"goat",
+	"mouse",
+	"moose",
+	"tortoise",
+	"chicken",
+	"pig",
+	"walrus",
+	"wombat",
+	"kangaroo",
+	"eagle",
+	"dolphin",
+};
+
+static char *body_size[] = {
+	"enormous",
+	"tiny",
+	"huge",
+	"great",
+	"[animal]-sized",
+	"hulking",
+	"squat",
+	"short",
+	"tall thin",
+	"globular",
+	"spindly",
+	"glutinous",
+};
+
+static char *drinking[] = {
+	"drinking",
+	"sipping",
+	"quaffing",
+	"nursing",
+	"sucking",
+	"slurping",
+	"ingesting",
+	"siphoning",
+};
+
+static char *simplespacedrink[] = {
+	"[strongdrink]",
+	"Dawnsnuffler",
+	"Spacewalker Red",
+	"Jugo",
+	"juiced vorlon",
+	"Wandering Zarkon",
+	"Confuser",
+};
+
+static char *drinking_vessel[] = {
+	"flask",
+	"flagon",
+	"cup",
+	"glass",
+	"cylinder",
+	"decanter",
+	"mug",
+	"carafe",
+	"pitcher",
+	"snifter",
+	"snorkler",
+	"injector",
+	"pipe",
+	"capsule",
+	"tankard",
+};
+
+static char *spacedrink[] = {
+	"a [drinking_vessel] of [planetary_origin] [simplespacedrink]",
+	"a [planetary_origin] [simplespacedrink]",
+	"a [drinking_vessel] of [simplespacedrink]",
+	"a [simplespacedrink] in a [drinking_vessel]",
+	"a [simplespacedrink]",
+};
+
+static char *planetary_origin[] = {
+	"Arcturan",
+	"Norkunian",
+	"Fontobian",
+	"Skornallan",
+	"Vekkazi",
+	"Wallunian",
+	"Zarkon",
+	"Schaazbaut",
+	"Sordoban",
+};
+
+static char *space_locale[] = {
+	"the far reaches of the Zarkon colonies",
+	"the shoulder of Orion",
+	"Orion's nether regions",
+	"somewhere in the Andromeda region",
+	"parts unknown",
+	"the inner arm of the Vorlon spiral",
+	"a planet in the near arm of the [planetary_origin] galaxy",
+	"the neutral zone",
+	"the [planetary_origin] nebula",
+	"the far side of the [planetary_origin] formation",
+	"a little known planet in colonies",
+};
+
+static char *alien_type[] = {
+	"Boggo",
+	"Waffabee",
+	"Korpon",
+	"Quimbo",
+	"Borlion",
+	"Wandulian",
+};
+
+static char *small_number[] = {
+	"two",
+	"three",
+	"four",
+	"five",
+	"six",
+};
+
+static char *alien_appendages[] = {
+	"[small_number] multi-jointed limbs terminated with [small_number] fingerlings",
+	"[small_number] tentacles",
+	"very long arms",
+	"very short appendages",
+	"pair of antennae",
+	"[small_number] jointed stalks",
+};
+
+static char *alien_eyes[] = {
+	"[small_number] eyes",
+	"[small_number] [color] eyes",
+	"[small_number] [color] small eyes",
+	"[small_number] huge eyes",
+	"[small_number] eyeslits",
+	"[small_number] eyestalks",
+};
+
+static char *skin_pattern[] = {
+	"spotted",
+	"striped",
+	"uniform",
+	"shining",
+	"iridescent",
+	"faintly glowing",
+	"slightly smoking",
+};
+
+static char *color[] = {
+	"green",
+	"reddish",
+	"purple",
+	"black",
+	"gray",
+	"pink",
+	"orange",
+	"pale yellow",
+	"pale green",
+	"blue",
+	"pale blue",
+};
+
+static char *skin_texture[] = {
+	"slimy",
+	"smooth",
+	"bumpy",
+	"scaly",
+	"crusty",
+	"oozing",
+};
+
+static char *skin[] = {
+	"hide",
+	"skin",
+	"fur",
+	"hair",
+	"carapace",
+	"chitin",
+	"armor plating",
+	"membrane",
+};
+
+static char *alien_skin[] = {
+	"[color] [skin_pattern] [skin_texture] [skin]",
+	"[skin_texture] [skin]",
 };
 
 struct macro common_words[] = {
@@ -573,7 +775,23 @@ struct macro common_words[] = {
 	{ "fancy_metal", ARRAYSIZE(fancy_metal), fancy_metal },
 	{ "hero", ARRAYSIZE(hero), hero },
 	{ "body_part", ARRAYSIZE(body_part), body_part },
+	{ "body_size", ARRAYSIZE(body_size), body_size },
+	{ "drinking", ARRAYSIZE(drinking), drinking },
+	{ "planetary_origin", ARRAYSIZE(planetary_origin), planetary_origin },
+	{ "space_locale", ARRAYSIZE(space_locale), space_locale },
+	{ "alien_type", ARRAYSIZE(alien_type), alien_type },
+	{ "alien_appendages", ARRAYSIZE(alien_appendages), alien_appendages },
+	{ "alien_eyes", ARRAYSIZE(alien_eyes), alien_eyes },
+	{ "skin_texture", ARRAYSIZE(skin_texture), skin_texture },
+	{ "skin_pattern", ARRAYSIZE(skin_pattern), skin_pattern },
+	{ "alien_skin", ARRAYSIZE(alien_skin), alien_skin },
+	{ "color", ARRAYSIZE(color), color },
+	{ "small_number", ARRAYSIZE(small_number), small_number },
+	{ "spacedrink", ARRAYSIZE(spacedrink), spacedrink },
+	{ "drinking_vessel", ARRAYSIZE(drinking_vessel), drinking_vessel },
+	{ "simplespacedrink", ARRAYSIZE(simplespacedrink), simplespacedrink },
 	{ "amazing", ARRAYSIZE(amazing), amazing },
+	{ "animal", ARRAYSIZE(animal), animal },
 };
 
 static char *fight_action1[] = {
@@ -667,6 +885,17 @@ static char *luxurious_spaceship_cabin[] = {
 static char *spaceship_interior1[] = {
 };
 
+static char *bar_char[] = {
+	"a [body_size] [planetary_origin] [alien_type] with [alien_appendages] covered with [alien_skin] and [alien_eyes] [drinking] a [spacedrink]",
+	"[drinking] a [spacedrink], a [body_size] [alien_type] from [space_locale] with [alien_eyes] and [alien_appendages] covered with [alien_skin]",
+};
+
+static char *spaceport_bar1[] = {
+	"It was dimly lit in the. As [p1p] eyes adjusted to the light, [p1] could make out "
+	"a variety of characters seated at the bar. Closest, [bar_char]. Next, [bar_char]. "
+	"Then, [bar_char]. A rough crowd.",
+};
+
 static char *spaceship_interior[] = {
 	"{luxurious_spaceship_cabin}",
 #if 0
@@ -674,6 +903,7 @@ static char *spaceship_interior[] = {
 	"{cargo_spaceship_cabin}",
 	"{pirate_spaceship_cabin}",
 #endif
+	"[spaceport_bar1]",
 };
 
 static char *setting[] = {
@@ -686,6 +916,8 @@ static char *setting[] = {
 static struct macro settings[] = {
 	{ "setting", ARRAYSIZE(setting), setting },
 	{ "spaceship_interior", ARRAYSIZE(spaceship_interior), spaceship_interior },
+	{ "spaceport_bar1", ARRAYSIZE(spaceport_bar1), spaceport_bar1 },
+	{ "bar_char", ARRAYSIZE(bar_char), bar_char },
 	{ "luxurious_spaceship_cabin", ARRAYSIZE(luxurious_spaceship_cabin), luxurious_spaceship_cabin },
 };
 
