@@ -984,7 +984,7 @@ void remove_macro(char *setname, char *name, char *alt)
 		for (j = 0; j < macro_set[i].nmacros; j++) {
 			if (strcmp(macro_set[i].m[j].name, name) == 0) {
 				for (k = 0; k < macro_set[i].m[j].nalts; k++) {
-					if (strcmp(macro_set[i].m[j].alt[k], alt) == 0) {
+					if (alt == NULL || strcmp(macro_set[i].m[j].alt[k], alt) == 0) {
 						if (k == macro_set[i].m[j].nalts - 1) {
 							macro_set[i].m[j].nalts--;
 							return;
@@ -999,6 +999,11 @@ void remove_macro(char *setname, char *name, char *alt)
 			}
 		}
 	}
+}
+
+void clear_macro(char *setname, char *name)
+{
+	remove_macro(setname, name, NULL);
 }
 
 static char *find_matching_close_bracket(char *s, int type)

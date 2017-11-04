@@ -40,5 +40,6 @@ void init_macros(void);
 void add_macro_set(char *setname);
 void add_macro(char *setname, char *name, char *alt);
 void remove_macro(char *setname, char *name, char *alt);
+void clear_macro(char *setname, char *name);
 
 #endif
