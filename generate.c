@@ -64,7 +64,8 @@ struct location {
 	float x, y, z; /* location used for calculating distances/proximity */
 	int planet; /* what planet this location is on */
 #define LOCATION_TYPE_SPACESHIP 0
-#define LOCATION_TYPE_PLANETARY 1
+#define LOCATION_TYPE_SPACEPORT 1
+#define LOCATION_TYPE_PLANETARY 2
 	int type;
 } location[MAX_LOCATIONS];
 int nlocations = 0;
@@ -192,20 +193,27 @@ static void generate_characters(void)
 	printf("\n");
 }
 
-static void generate_planetary_location(int planet_number)
+static void generate_planetary_location(int planet_number, int spaceport)
 {
 	char name[100];
 
 	if (nlocations >= MAX_LOCATIONS)
 		return;
-	sprintf(name, "[planetary_location_name] %d", nlocations);
-	location[nlocations].name = expand_macros(name);
-	location[nlocations].description = expand_macros("[planetary_location_description]");
+	if (spaceport) {
+		sprintf(name, "[spaceport_location_name] %d", nlocations);
+		location[nlocations].name = expand_macros(name);
+		location[nlocations].type = LOCATION_TYPE_SPACEPORT;
+		location[nlocations].description = expand_macros("[spaceport_location_description]");
+	} else {
+		sprintf(name, "[planetary_location_name] %d", nlocations);
+		location[nlocations].name = expand_macros(name);
+		location[nlocations].type = LOCATION_TYPE_PLANETARY;
+		location[nlocations].description = expand_macros("[planetary_location_description]");
+	}
 	location[nlocations].x = planet[planet_number].x + 100.0 * ((double) rand() / (double) RAND_MAX);
 	location[nlocations].y = planet[planet_number].y + 100.0 * ((double) rand() / (double) RAND_MAX);
 	location[nlocations].z = planet[planet_number].z + 100.0 * ((double) rand() / (double) RAND_MAX);
 	location[nlocations].planet = planet_number;
-	location[nlocations].type = LOCATION_TYPE_PLANETARY;
 	location[nlocations].nconnections = 0;
 	nlocations++;
 }
@@ -236,7 +244,7 @@ static void generate_locations(void)
 	int i, j;
 	for (i = 0; i < nplanets; i++) {
 		for (j = 0; j < NLOCS_PER_PLANET; j++)
-			generate_planetary_location(i);
+			generate_planetary_location(i, j == 0);
 	}
 	for (i = 0; i < MAX_SPACESHIPS; i++) {
 		generate_spaceship_location();
@@ -255,6 +263,10 @@ static void print_locations(void)
 			break;
 		case LOCATION_TYPE_SPACESHIP:
 			printf("Location %d: spaceship, %s, on planet %d, %s\n",
+				i, location[i].name, location[i].planet, location[i].description);
+			break;
+		case LOCATION_TYPE_SPACEPORT:
+			printf("Location %d: spaceport, %s, on planet %d, %s\n",
 				i, location[i].name, location[i].planet, location[i].description);
 			break;
 		default:
@@ -385,18 +397,29 @@ static void move_character(int i, int pov)
 		}
 		do {
 			n = rand() % nlocations;
-		} while (location[n].type != LOCATION_TYPE_PLANETARY);
+		} while (location[n].type != LOCATION_TYPE_SPACEPORT);
 		from = cast[i].location;
 		to = n;
 		via = expand_macros("[spaceship_travel]");
 	} else {
-		n = rand() % location[cast[i].location].nconnections;
-		from = location[cast[i].location].connection[n].from;
-		to = location[cast[i].location].connection[n].to;
-		via = expand_macros(location[cast[i].location].connection[n].via);
+		if (location[cast[i].location].type == LOCATION_TYPE_SPACEPORT && rand() % 100 < 10) {
+			do {
+				n = rand() % nlocations;
+			} while (location[n].type != LOCATION_TYPE_SPACESHIP);
+			from = cast[i].location;
+			to = n;
+			via = expand_macros("[spaceship_travel]");
+		} else {
+			n = rand() % location[cast[i].location].nconnections;
+			from = location[cast[i].location].connection[n].from;
+			to = location[cast[i].location].connection[n].to;
+			via = expand_macros(location[cast[i].location].connection[n].via);
+		}
 	}
-	printf("%s chooses to move from %s to %s via %s.\n", cast[i].firstname,
-		location[from].name, location[to].name, via);
+	if (pov == i)
+		printf("%s chooses to move from %s to %s via %s.\n", cast[i].firstname,
+			location[from].name, location[to].name, via);
+	cast[i].location = to;
 	free(via);
 }
 
@@ -423,7 +446,7 @@ void dont_just_stand_there_do_something(int i, int pov)
 
 void simulate(void)
 {
-#define MOVES 100
+#define MOVES 200
 #define MOVES_PER_CHAR 10
 	int i, j;
 	int pov = 0;
