@@ -917,6 +917,26 @@ static char *spaceship_interior[] = {
 	"[spaceport_bar1]",
 };
 
+static char *planetary_location_name[] = {
+	"[desert_plains]",
+	"[jungle]",
+	"[street]",
+	"[interior_apartment]",
+};
+
+static char *spaceport_location_name[] = {
+	"[small_spaceport]",
+	"[large_spaceport]",
+};
+
+static char *planetary_connection_via[] = {
+	"[land_speeder]",
+	"[cargo_hauler]",
+	"[walking]",
+	"[running]",
+	"[horseback]",
+};
+
 static char *setting[] = {
 	"{spaceship_interior}",
 #if 0
@@ -931,6 +951,9 @@ static struct macro settings[] = {
 	{ "bar_char", ARRAYSIZE(bar_char), bar_char },
 	{ "sat_at_the_bar", ARRAYSIZE(sat_at_the_bar), sat_at_the_bar },
 	{ "luxurious_spaceship_cabin", ARRAYSIZE(luxurious_spaceship_cabin), luxurious_spaceship_cabin },
+	{ "planetary_location_name", ARRAYSIZE(planetary_location_name), planetary_location_name},
+	{ "spaceport_location_name", ARRAYSIZE(spaceport_location_name), spaceport_location_name},
+	{ "planetary_connection_via", ARRAYSIZE(planetary_connection_via), planetary_connection_via},
 };
 
 static struct macro scenes[] = {
