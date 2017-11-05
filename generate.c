@@ -29,7 +29,7 @@
 #include "macros.h"
 #include "print.h"
 
-#define MAXCHARS 3
+#define MAXCHARS 8
 struct character {
 	char *firstname;
 	char *middlename;
@@ -386,8 +386,7 @@ void tests_allies_and_enemies(void)
 
 static void move_character(int i, int pov)
 {
-	int n;
-	int from, to;
+	int n, j, from, to;
 	char *via;
 
 	if (location[cast[i].location].nconnections == 0) {
@@ -420,6 +419,13 @@ static void move_character(int i, int pov)
 		printf("%s chooses to move from %s to %s via %s.\n", cast[i].firstname,
 			location[from].name, location[to].name, via);
 	cast[i].location = to;
+	for (j = 0; j < MAXCHARS; j++) {
+		if (j == i)
+			continue;
+		if (pov == i && cast[j].location == cast[i].location) {
+			printf("%s sees that %s is also here.\n", cast[i].firstname, cast[j].firstname);
+		}
+	}
 	free(via);
 }
 
