@@ -304,9 +304,9 @@ static void generate_location_connections(void)
 	for (i = 0; i < nlocations; i++) {
 		if (location[i].type == LOCATION_TYPE_SPACESHIP)
 			continue;
-		if (i == j)
-			continue; /* do not self connect */
 		for (j = 0; j < nlocations; j++) {
+			if (i == j)
+				continue; /* do not self connect */
 			if (location[j].type == LOCATION_TYPE_SPACESHIP)
 				continue;
 			dx = location[i].x - location[j].x;
