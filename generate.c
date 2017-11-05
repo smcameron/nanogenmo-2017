@@ -307,6 +307,14 @@ static void generate_location_connections(void)
 	}
 }
 
+static void assign_characters_locations(void)
+{
+	int i, n;
+
+	for (i = 0; i < MAXCHARS; i++)
+		cast[i].location = rand() % nlocations;
+}
+
 /* param should be "p1" or "p2", role should be "hero", or "antagonist" */
 void teardown_character_param(char *param, char *role)
 {
@@ -364,6 +372,34 @@ void tests_allies_and_enemies(void)
 }
 #endif
 
+static void move_character(int i, int pov)
+{
+	int n;
+	int from, to;
+	char *via;
+
+	if (location[cast[i].location].nconnections == 0) {
+		if (location[cast[i].location].type != LOCATION_TYPE_SPACESHIP) {
+			printf("BUG: location %d has no connections but is not a spaceship\n",
+				cast[i].location);
+		}
+		do {
+			n = rand() % nlocations;
+		} while (location[n].type != LOCATION_TYPE_PLANETARY);
+		from = cast[i].location;
+		to = n;
+		via = expand_macros("[spaceship_travel]");
+	} else {
+		n = rand() % location[cast[i].location].nconnections;
+		from = location[cast[i].location].connection[n].from;
+		to = location[cast[i].location].connection[n].to;
+		via = expand_macros(location[cast[i].location].connection[n].via);
+	}
+	printf("%s chooses to move from %s to %s via %s.\n", cast[i].firstname,
+		location[from].name, location[to].name, via);
+	free(via);
+}
+
 #define ACTION_MOVE 0
 #define ACTION_THINK 1
 #define MAX_ACTIONS 2
@@ -374,8 +410,7 @@ void dont_just_stand_there_do_something(int i, int pov)
 	action = rand() % MAX_ACTIONS;
 	switch (action) {
 	case ACTION_MOVE:
-		if (i == pov)
-			printf("%s chooses to move.\n", cast[i].firstname);
+		move_character(i, pov);
 		break;
 	case ACTION_THINK:
 		if (i == pov)
@@ -409,6 +444,7 @@ int main(int argc, char *argv[])
 	generate_planets();
 	generate_locations();
 	generate_location_connections();
+	assign_characters_locations();
 	print_planets();
 	print_locations();
 	add_macro("common_words", "Hero", cast[0].firstname);
