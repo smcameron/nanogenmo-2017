@@ -395,7 +395,7 @@ void tests_allies_and_enemies(void)
 }
 #endif
 
-static void introduce_character(int i, int pov)
+static void setup_hero(int i)
 {
 	clear_macro("common_words", "Hero");
 	clear_macro("common_words", "HeroLastName");
@@ -410,6 +410,11 @@ static void introduce_character(int i, int pov)
 	add_macro("common_words", "heroself", cast[i].thirdself);
 	add_macro("common_words", "heropp", cast[i].thirdpp);
 	setup_character_param("p1", "hero", cast[i].profession);
+}
+
+static void introduce_character(int i, int pov)
+{
+	setup_hero(i);
 	print("[character_introduction]\n\n");
 	cast[i].introduced_yet = 1;
 }
@@ -471,11 +476,23 @@ void dont_just_stand_there_do_something(int i, int pov)
 	action = rand() % MAX_ACTIONS;
 	switch (action) {
 	case ACTION_MOVE:
-		move_character(i, pov);
+		if (i == pov) {
+			setup_hero(i);
+			move_character(i, pov);
+		}
 		break;
 	case ACTION_THINK:
-		if (i == pov)
-			printf("%s chooses to think.\n", cast[i].firstname);
+		if (i == pov) {
+			setup_hero(i);
+			if (location[cast[i].location].type == LOCATION_TYPE_SPACESHIP && (rand() % 100) < 70) {
+				print("[herospaceshipthings]\n");
+				break;
+			}
+			if ((rand() % 100) < 80)
+				print("[herothinks]\n");
+			else
+				print("[hero] [did_something_innocuous]\n");
+		}
 		break;
 	default:
 		break;

@@ -40,8 +40,8 @@ static char *intro[] = {
 	"to [steal] [hidden] [plan]s to the [foe]'s ultimate weapon, the "
 	"[ultimate] [ultimateweapon], an [ultimateweapon] with enough power to "
 	"[destroy] an entire [planet].  Pursued by the [foe]'s [evil] "
-	"agents, [hero] [flee]s home aboard [hero3p] [spaceship], [custodian] "
-	"of the stolen [hidden] [plan]s that can save [hero3p] people and restore freedom "
+	"agents, [hero] [flee]s home aboard [herop] [spaceship], [custodian] "
+	"of the stolen [hidden] [plan]s that can save [herop] people and restore freedom "
 	"to the galaxy....",
 };
 
@@ -339,12 +339,52 @@ static char *charactertitle[] = {
 };
 
 static char *theordinaryworld[] = {
-	"[theordworld1]",
+	"theordinaryworld1",
 };
 
-static char *theordworld1[] = {
+static char *spaceshipgauges[] = {
+	"propellant pressure",
+	"engine status",
+	"gauges",
+	"switches",
+	"life support system status",
+	"warp drive coolant pressure",
+	"warp drive status",
+	"deflector shield status",
+	"photon torpedo status",
+	"phaser bank status",
+	"attitude indicator",
+	"flight trajectory",
+};
+
+static char *spaceshipdash[] = {
+	"control panel",
+	"dashboard",
+};
+
+static char *spaceshipsystem[] = {
+	"warp drive",
+	"auxiliary life support system",
+	"main thrusters",
+	"maneuvering thrusters",
+	"tractor beam",
+	"ship's scanners",
+	"deflector shields",
+};
+
+static char *herospaceshipthings[] = {
+	"[hero] checks the [spaceshipgauges] on the [spaceshipdash]",
+	"[hero] powers up the [spaceshipsystem]",
+	"[hero] powers down the [spaceshipsystem]",
+	"[hero] engages the [spaceshipsystem]",
+	"[hero] fires up the [spaceshipsystem]",
+	"[hero] toggles [spaceshipsystem] on",
+	"[hero] enters a course into the ship's computer",
+};
+
+static char *herothinks[] = {
 	"[heroworksjob]. [heroisbored]. [herowantsadventure]. [herodreams]",
-	"[heroisbored]. [heroneedsjob]. [heroisbored]. [herodrinks]. [herodreams]",
+	"[heroisbored]. [heropondersjob]. [heroisbored]. [herodrinks]. [herodreams]",
 };
 
 static char *heroisbored[] = {
@@ -394,14 +434,16 @@ static char *herodreams[] = {
 	"[hero] [thinks about] travelling the galaxy", 
 	"[hero] [thinks about] where things went wrong", 
 	"[hero] [thinks about] how things could be better", 
-	"[hero] [thinks about] how to get [hero3p] life back together",
+	"[hero] [thinks about] how to get [herop] life back together",
 };
 
-static char *heroneedsjob[] = {
+static char *heropondersjob[] = {
 	"[hero] [thinks-about] where to get the money",
-	"[hero] [thinks-about] how to make a living.",
-	"[hero] [needs] a job.",
-	"[hero] [needs] a way to make money.",
+	"[hero] [thinks-about] how to make a living",
+	"[hero] [needs] a job",
+	"[hero] [needs] a way to make money",
+	"[hero] [thinks-about] [herop] work as a [heroprofession]",
+	"[hero] [thinks-about] becoming a [profession]",
 };
 
 static char *needs[] = {
@@ -822,11 +864,11 @@ struct macro common_words[] = {
 	{ "surname", ARRAYSIZE(surnames), surnames },
 	{ "character-title", ARRAYSIZE(charactertitle), charactertitle },
 	{ "the-ordinary-world", ARRAYSIZE(theordinaryworld), theordinaryworld },
-	{ "theordworld1", ARRAYSIZE(theordworld1), theordworld1 },
+	{ "herothinks", ARRAYSIZE(herothinks), herothinks },
 	{ "heroisbored", ARRAYSIZE(heroisbored), heroisbored },
 	{ "looks", ARRAYSIZE(looks), looks },
 	{ "heroworksjob", ARRAYSIZE(heroworksjob), heroworksjob },
-	{ "heroneedsjob", ARRAYSIZE(heroneedsjob), heroneedsjob },
+	{ "heropondersjob", ARRAYSIZE(heropondersjob), heropondersjob },
 	{ "herodrinks", ARRAYSIZE(herodrinks), herodrinks },
 	{ "thinks-about", ARRAYSIZE(thinksabout), thinksabout },
 	{ "needs", ARRAYSIZE(needs), needs },
@@ -865,6 +907,10 @@ struct macro common_words[] = {
 	{ "time_off", ARRAYSIZE(time_off), time_off },
 	{ "did_something_innocuous", ARRAYSIZE(did_something_innocuous), did_something_innocuous },
 	{ "space_company", ARRAYSIZE(space_company), space_company },
+	{ "herospaceshipthings", ARRAYSIZE(herospaceshipthings), herospaceshipthings },
+	{ "spaceshipgauges", ARRAYSIZE(spaceshipgauges), spaceshipgauges },
+	{ "spaceshipdash", ARRAYSIZE(spaceshipdash), spaceshipdash },
+	{ "spaceshipsystem", ARRAYSIZE(spaceshipsystem), spaceshipsystem },
 };
 
 static char *fight_action1[] = {
