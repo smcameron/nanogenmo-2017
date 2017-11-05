@@ -32,7 +32,7 @@ struct macro_expansion_type {
 
 static struct macro_expansion_type macro_type[256]; /* indexed by open char '{' or '[' */
 
-char *intro[] = {
+static char *intro[] = {
 	"[beginning], [peaceful-happening] and [peaceful-happening]. "
 	"Then [began] a [timeperiod] of [unrest]. Rebel [spaceship]s, [striking] "
 	"from a [hidden] [base], have won their first [victory] against the "
@@ -45,7 +45,7 @@ char *intro[] = {
 	"to the galaxy....",
 };
 
-char *spaceship[] = {
+static char *spaceship[] = {
 	"starship",
 	"spaceship",
 	"destroyer",
@@ -53,14 +53,14 @@ char *spaceship[] = {
 	"battlestar",
 };
 
-char *striking[] = {
+static char *striking[] = {
 	"striking",
 	"attacking",
 	"assaulting",
 	"assailing",
 };
 
-char *hidden[] = {
+static char *hidden[] = {
 	"hidden",
 	"concealed",
 	"sequestered",
@@ -69,14 +69,14 @@ char *hidden[] = {
 	"secret",
 };
 
-char *base[] = {
+static char *base[] = {
 	"base",
 	"starbase",
 	"base of operations",
 	"headquarters",
 };
 
-char *battle[] = {
+static char *battle[] = {
 	"battle",
 	"conflict",
 	"fight",
@@ -85,14 +85,14 @@ char *battle[] = {
 	"firefight",
 };
 
-char *plan[] = {
+static char *plan[] = {
 	"plan",
 	"blueprint",
 	"document",
 	"database",
 };
 
-char *beginning[] = {
+static char *beginning[] = {
 	"In the beginning",
 	"At the outset",
 	"In the early dawn of our story",
@@ -104,7 +104,7 @@ char *beginning[] = {
 	"At the commencement",
 };
 
-char *birds[] = {
+static char *birds[] = {
 	"loons",
 	"eagles",
 	"bluejays",
@@ -115,14 +115,14 @@ char *birds[] = {
 	"ducks",
 };
 
-char *chirping[] = {
+static char *chirping[] = {
 	"chirping",
 	"singing",
 	"calling",
 	"making bird sounds",
 };
 
-char *flowers[] = {
+static char *flowers[] = {
 	"flowers",
 	"roses",
 	"daffodils",
@@ -131,7 +131,7 @@ char *flowers[] = {
 	"honeysuckle",
 };
 
-char *strongdrink[] = {
+static char *strongdrink[] = {
 	"wine",
 	"beer",
 	"whiskey",
@@ -142,7 +142,7 @@ char *strongdrink[] = {
 	"martini",
 };
 
-char *plentiful[] = {
+static char *plentiful[] = {
 	"plentiful",
 	"easy to come by",
 	"abundant",
@@ -150,7 +150,7 @@ char *plentiful[] = {
 	"everywhere",
 };
 
-char *food[] = {
+static char *food[] = {
 	"food",
 	"victuals",
 	"meal",
@@ -165,7 +165,7 @@ char *food[] = {
 	"fish",
 };
 
-char *good[] = {
+static char *good[] = {
 	"good",
 	"excellent",
 	"wonderful",
@@ -176,14 +176,14 @@ char *good[] = {
 	"perfect",
 };
 
-char *not_expensive[] = {
+static char *not_expensive[] = {
 	"cheap",
 	"not expensive",
 	"inexpensive",
 	"easy to come by",
 };
 
-char *peaceful_happening[] = {
+static char *peaceful_happening[] = {
 	"the [birds] were [chirping]",
 	"the wind blew gently",
 	"the children played happily",
@@ -196,12 +196,12 @@ char *peaceful_happening[] = {
 	"the streets were filled with festival goers",
 };
 
-char *planet[] = {
+static char *planet[] = {
 	"planet",
 	"world",
 };
 
-char *evil[] = {
+static char *evil[] = {
 	"evil",
 	"sinister",
 	"vile",
@@ -211,32 +211,32 @@ char *evil[] = {
 	"terrible",
 };
 
-char *foe[] = {
+static char *foe[] = {
 	"foe",
 	"villian",
 	"enemy",
 };
 
-char *victory[] = {
+static char *victory[] = {
 	"victory",
 	"triumph",
 	"conquest",
 };
 
-char *ultimate[] = {
+static char *ultimate[] = {
 	"ultimate",
 	"final",
 	"super",
 };
 
-char *ultimateweapon[] = {
+static char *ultimateweapon[] = {
 	"gigablaster",
 	"quarkbomber",
 	"planetmelter",
 	"superannihilator",
 };
 
-char *unrest[] = {
+static char *unrest[] = {
 	"unrest",
 	"strife",
 	"conflict",
@@ -248,7 +248,7 @@ char *unrest[] = {
 	"danger",
 };
 
-char *timeperiod[] = {
+static char *timeperiod[] = {
 	"period",
 	"time",
 	"interval",
@@ -257,7 +257,7 @@ char *timeperiod[] = {
 	"epoch",
 };
 
-char *began[] = {
+static char *began[] = {
 	"began",
 	"there was",
 	"commenced",
@@ -266,7 +266,7 @@ char *began[] = {
 	"happened",
 };
 
-char *steal[] = {
+static char *steal[] = {
 	"steal",
 	"pilfer",
 	"obtain",
@@ -276,7 +276,7 @@ char *steal[] = {
 	"liberate",
 };
 
-char *custodian[] = {
+static char *custodian[] = {
 	"custodian",
 	"caretaker",
 	"keeper",
@@ -285,7 +285,7 @@ char *custodian[] = {
 	"protector",
 };
 
-char *flee[] = {
+static char *flee[] = {
 	"flee",
 	"race",
 	"fly",
@@ -294,24 +294,24 @@ char *flee[] = {
 	"retreat",
 };
 
-char *hero[] = {
+static char *hero[] = {
 	"[Hero]", /* first name */
 	"[hero3]", /* he/she */
 };
 
-char *surnames[] = {
+static char *surnames[] = {
 #include "lastnames.h"
 };
 
-char *malefirstnames[] = {
+static char *malefirstnames[] = {
 #include "male_firstnames.h"
 };
 
-char *femalefirstnames[] = {
+static char *femalefirstnames[] = {
 #include "female_firstnames.h"
 };
 
-char *charactertitle[] = {
+static char *charactertitle[] = {
 	"M.",
 	"M.",
 	"M.",
@@ -338,22 +338,22 @@ char *charactertitle[] = {
 	"Ambassador",
 };
 
-char *theordinaryworld[] = {
+static char *theordinaryworld[] = {
 	"[theordworld1]",
 };
 
-char *theordworld1[] = {
+static char *theordworld1[] = {
 	"[heroworksjob]. [heroisbored]. [herowantsadventure]. [herodreams]",
 	"[heroisbored]. [heroneedsjob]. [heroisbored]. [herodrinks]. [herodreams]",
 };
 
-char *heroisbored[] = {
+static char *heroisbored[] = {
 	"[hero] [looks] out the window",
 	"[hero] [looks] at the clock",
 	"[hero] wonders what time it is",
 };
 
-char *heroworksjob[] = {
+static char *heroworksjob[] = {
 	"[hero] types in a few more entries",
 	"[hero] sweeps the deck",
 	"[hero] empties the wastebasket",
@@ -364,11 +364,11 @@ char *heroworksjob[] = {
 	"[hero] [thinks-about] how things might have been different",
 };
 
-char *herowantsadventure[] = {
+static char *herowantsadventure[] = {
 	"[hero] [wants] [adventureidea]"
 };
 
-char *wants[] = {
+static char *wants[] = {
 	"wants",
 	"desires",
 	"craves",
@@ -378,7 +378,7 @@ char *wants[] = {
 	"will go out of his mind without",
 };
 
-char *adventureidea[] = {
+static char *adventureidea[] = {
 	"some kind of adventure",
 	"some kind of excitement",
 	"something better than this life, something exciting",
@@ -387,7 +387,7 @@ char *adventureidea[] = {
 	"a way to shake things up, a change from this routine",
 };
 
-char *herodreams[] = {
+static char *herodreams[] = {
 	"[hero] dreams about running away from it all",
 	"[hero] [thinks about] dropping everything and hitting the road", 
 	"[hero] [thinks about] quitting this job", 
@@ -397,14 +397,14 @@ char *herodreams[] = {
 	"[hero] [thinks about] how to get [hero3p] life back together",
 };
 
-char *heroneedsjob[] = {
+static char *heroneedsjob[] = {
 	"[hero] [thinks-about] where to get the money",
 	"[hero] [thinks-about] how to make a living.",
 	"[hero] [needs] a job.",
 	"[hero] [needs] a way to make money.",
 };
 
-char *needs[] = {
+static char *needs[] = {
 	"needs",
 	"requires",
 	"desparately needs",
@@ -413,7 +413,7 @@ char *needs[] = {
 	"suffers from a lack of",
 };
 
-char *herodrinks[] = {
+static char *herodrinks[] = {
 	"[hero] pours a drink of [strongdrink]",
 	"[hero] sips a [strongdrink]",
 	"[hero] lifts a glass of [strongdrink]",
@@ -421,38 +421,38 @@ char *herodrinks[] = {
 	"[hero] [thinks-about] a [strongdrink]",
 };
 
-char *thinksabout[] = {
+static char *thinksabout[] = {
 	"thinks about",
 	"considers",
 	"ponders",
 	"imagines",
 };
 
-char *looks[] = {
+static char *looks[] = {
 	"stares",
 	"looks",
 	"takes a look",
 };
 
-char *upholstered[] = {
+static char *upholstered[] = {
 	"upholstered",
 	"covered",
 };
 
-char *gleaming[] = {
+static char *gleaming[] = {
 	"gleaming",
 	"shining",
 	"shiny",
 	"sparkling",
 };
 
-char *spaceshipwalls[] = {
+static char *spaceshipwalls[] = {
 	"walls of the ship",
 	"bulkheads",
 	"wall panels",
 };
 
-char *fancy_metal[] = {
+static char *fancy_metal[] = {
 	"hyperdyne steelium",
 	"neutronic aluminum",
 	"titanium",
@@ -460,7 +460,7 @@ char *fancy_metal[] = {
 	"a platinum-steel alloy",
 };
 
-char *luxurious[] = {
+static char *luxurious[] = {
 	"luxurious",
 	"opulent",
 	"decadent",
@@ -473,7 +473,7 @@ char *luxurious[] = {
 	"fancy",
 };
 
-char *animal_hide[] = {
+static char *animal_hide[] = {
 	"leather",
 	"soft leather",
 	"hide of [planetary_origin] space whales",
@@ -481,7 +481,7 @@ char *animal_hide[] = {
 	"animal hides from all over the galaxy",
 };
 
-char *amazing[] = {
+static char *amazing[] = {
 	"beautiful",
 	"wonderful",
 	"amazing",
@@ -496,7 +496,7 @@ char *amazing[] = {
 	"awe inspiring",
 };
 
-char *musical_instrument[] = {
+static char *musical_instrument[] = {
 	"guitar",
 	"piano",
 	"flute",
@@ -505,7 +505,7 @@ char *musical_instrument[] = {
 	"Gonkan windpipe",
 };
 
-char *beautiful_space_view[] = {
+static char *beautiful_space_view[] = {
 	"[amazing] view of the planet below",
 	"[amazing] view of the distant stars outside",
 	"[amazing] view of the planet's moon",
@@ -943,7 +943,7 @@ static struct macro scenes[] = {
 
 static struct macro_set_entry *macro_set = NULL;
 static int nmacro_sets = 0;
-char **macro_set_name = NULL;
+static char **macro_set_name = NULL;
 
 void add_macro_set(char *setname)
 {
