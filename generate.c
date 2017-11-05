@@ -153,6 +153,7 @@ static void generate_character(struct character *c)
 	c->lastname = expand_macros("[surname]");
 	c->title = expand_macros("[character-title]");
 	c->sex = rand() % 2;
+	c->introduced_yet = 0;
 	if (c->sex) {
 		c->firstname = expand_macros("[male-firstname]");
 		c->middlename = expand_macros("[male-firstname]");
@@ -384,6 +385,12 @@ void tests_allies_and_enemies(void)
 }
 #endif
 
+static void introduce_character(int i, int pov)
+{
+	printf("Introducing %s %s\n", cast[i].firstname, cast[i].lastname);
+	cast[i].introduced_yet = 1;
+}
+
 static void move_character(int i, int pov)
 {
 	int n, j, from, to;
@@ -436,6 +443,8 @@ void dont_just_stand_there_do_something(int i, int pov)
 {
 	int action;
 
+	if (i == pov && !cast[i].introduced_yet)
+		introduce_character(i, pov);
 	action = rand() % MAX_ACTIONS;
 	switch (action) {
 	case ACTION_MOVE:
