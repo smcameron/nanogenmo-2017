@@ -719,6 +719,75 @@ static char *alien_skin[] = {
 	"[skin_texture] [skin]",
 };
 
+static char *space_company[] = {
+	"Mulligan Heavy Industries",
+	"Haxo Limited",
+	"Neumann Spacecraft",
+	"Holloway Propulsion",
+	"InterStellar Commerce",
+	"Intergalactic Holdings",
+	"Gamma Five",
+	"Arcturus Alpha",
+	"Daxon Astro",
+	"Zeexo Turbine",
+	"Lightspeed",
+	"Jaxoklon Skyways",
+};
+
+static char *profession[] = {
+	"pilot",
+	"farmer",
+	"smuggler",
+	"droid",
+	"navigator",
+	"droid technician",
+	"gambler",
+	"hustler",
+	"detective",
+	"detective for [space_company]",
+	"archaeologist",
+	"shepherd",
+	"lawyer for [space_company]",
+	"droid programmer for [space_company]",
+	"droid programmer",
+	"real estate broker",
+	"mechanic",
+	"scientist",
+	"doctor",
+	"soldier",
+	"avionics engineer for [space_company]",
+	"asteroid miner",
+};
+
+static char *time_off[] = {
+	"time off",
+	"leisure time",
+	"spare time",
+	"evenings",
+	"weekends",
+};
+
+static char *did_something_innocuous[] = {
+	"looked around",
+	"twiddled [herop] thumbs",
+	"shuffled [herop] feet",
+	"pushed [herop] glasses up",
+	"scratched [herop] head",
+	"sighed wistfully",
+	"took a deep breath",
+	"lifted [herop] head",
+	"sneezed",
+	"looked up",
+};
+
+static char *character_introduction[] = {
+	"[Hero] [HeroLastName] was a [heroprofession] from [space_locale]. "
+	"[hero3] liked to drink a [spacedrink] in [herop] [time_off].",
+	"[Hero] [HeroLastName] came from [space_locale]. [Hero] was a [heroprofession].",
+	"[Hero] [HeroLastName] was born in [space_locale] but considered [heroself] to be from [space_locale]. [Hero] was a [heroprofession]. ",
+	"[Hero] [HeroLastName] [did_something_innocuous]. [Hero] was a [heroprofession] headed for [space_locale].",
+};
+
 struct macro common_words[] = {
 	{ "beginning", ARRAYSIZE(beginning), beginning },
 	{ "peaceful-happening", ARRAYSIZE(peaceful_happening), peaceful_happening },
@@ -791,6 +860,11 @@ struct macro common_words[] = {
 	{ "simplespacedrink", ARRAYSIZE(simplespacedrink), simplespacedrink },
 	{ "amazing", ARRAYSIZE(amazing), amazing },
 	{ "animal", ARRAYSIZE(animal), animal },
+	{ "profession", ARRAYSIZE(profession), profession },
+	{ "character_introduction", ARRAYSIZE(character_introduction), character_introduction },
+	{ "time_off", ARRAYSIZE(time_off), time_off },
+	{ "did_something_innocuous", ARRAYSIZE(did_something_innocuous), did_something_innocuous },
+	{ "space_company", ARRAYSIZE(space_company), space_company },
 };
 
 static char *fight_action1[] = {

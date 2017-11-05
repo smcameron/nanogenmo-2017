@@ -40,6 +40,7 @@ struct character {
 	char *thirdp;
 	char *thirdpp;
 	char *thirdself;
+	char *profession;
 	int sex;
 	int location;
 	int introduced_yet;
@@ -154,6 +155,7 @@ static void generate_character(struct character *c)
 	c->title = expand_macros("[character-title]");
 	c->sex = rand() % 2;
 	c->introduced_yet = 0;
+	c->profession = expand_macros("[profession]");
 	if (c->sex) {
 		c->firstname = expand_macros("[male-firstname]");
 		c->middlename = expand_macros("[male-firstname]");
@@ -340,10 +342,14 @@ void teardown_character_param(char *param, char *role)
 	clear_macro("common_words", p); /* "p1p", "[herop]" */
 	sprintf(p, "%sself", param);
 	clear_macro("common_words", p); /* "p1self", "[heroself]" */
+	sprintf(p, "%sprofession", param);
+	clear_macro("common_words", p); /* "p1profession", "[heroprofession]" */
+	sprintf(p, "%sprofession", role);
+	clear_macro("common_words", p);
 }
 
 /* param should be "p1" or "p2", role should be "hero", or "antagonist" */
-void setup_character_param(char *param, char *role)
+void setup_character_param(char *param, char *role, char *profession)
 {
 	char p[100], r[100];
 	teardown_character_param(param, role);
@@ -355,6 +361,10 @@ void setup_character_param(char *param, char *role)
 	add_macro("common_words", p, r); /* "p1p", "[herop]" */
 	sprintf(p, "%sself", param); sprintf(r, "[%sself]", role);
 	add_macro("common_words", p, r); /* "p1self", "[heroself]" */
+	sprintf(p, "%sprofession", param); sprintf(r, "[%sprofession]", role);
+	add_macro("common_words", p, r); /* "p1profession", "[heroprofession]" */
+	sprintf(p, "%sprofession", role); sprintf(r, "%s", profession);
+	add_macro("common_words", p, r); /* "heroprofession", "dentist" */
 }
 
 void introduction(void)
@@ -367,8 +377,8 @@ void introduction(void)
 void ordinary_world(void)
 {
 	print("The Ordinary World\n\n");
-	setup_character_param("p1", "hero");
-	setup_character_param("p2", "antagonist");
+	setup_character_param("p1", "hero", "[profession]");
+	setup_character_param("p2", "antagonist", "[profession]");
 	char *setting = expand_macros_by_type("{setting}\n\n", '{');
 	print(setting);
 	print("[the-ordinary-world]\n\n");
@@ -387,7 +397,20 @@ void tests_allies_and_enemies(void)
 
 static void introduce_character(int i, int pov)
 {
-	printf("Introducing %s %s\n", cast[i].firstname, cast[i].lastname);
+	clear_macro("common_words", "Hero");
+	clear_macro("common_words", "HeroLastName");
+	clear_macro("common_words", "hero3");
+	clear_macro("common_words", "herop");
+	clear_macro("common_words", "heroself");
+	clear_macro("common_words", "heropp");
+	add_macro("common_words", "HeroLastName", cast[i].lastname);
+	add_macro("common_words", "Hero", cast[i].firstname);
+	add_macro("common_words", "hero3", cast[i].third);
+	add_macro("common_words", "herop", cast[i].thirdp);
+	add_macro("common_words", "heroself", cast[i].thirdself);
+	add_macro("common_words", "heropp", cast[i].thirdpp);
+	setup_character_param("p1", "hero", cast[i].profession);
+	print("[character_introduction]\n\n");
 	cast[i].introduced_yet = 1;
 }
 
