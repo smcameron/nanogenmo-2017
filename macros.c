@@ -382,6 +382,45 @@ static char *herospaceshipthings[] = {
 	"[hero] enters a course into the ship's computer",
 };
 
+static char *boards[] = {
+	"boards",
+	"gets aboard",
+	"enters",
+	"walks up the gangplank into",
+	"climbs aboard",
+	"climbs into",
+};
+
+static char *disembarks[] = {
+	"disembarks from",
+	"climbs out of",
+	"walks down the gangplank of",
+	"exits",
+	"hops out of",
+};
+
+static char *spacecraft[] = {
+	"spacecraft",
+	"spaceship",
+	"vessel",
+	"ship",
+};
+
+static char *take_off[] = {
+	"take off",
+	"lift off",
+	"blast off",
+};
+
+static char *spaceship_travel_embark[] = {
+	"[hero] [boards] a [color] [spacecraft] and prepares to [take_off].",
+};
+
+static char *spaceship_travel_disembark[] = {
+	"[hero] [disembarks] the [spacecraft].",
+	"[hero] lowers the gangplank and [disembarks] the [spacecraft].",
+};
+
 static char *herothinks[] = {
 	"[heroworksjob]. [heroisbored]. [herowantsadventure]. [herodreams]",
 	"[heroisbored]. [heropondersjob]. [heroisbored]. [herodrinks]. [herodreams]",
@@ -587,6 +626,13 @@ static char *animal[] = {
 	"kangaroo",
 	"eagle",
 	"dolphin",
+};
+
+static char *rideable_animal[] = {
+	"elephant",
+	"horse",
+	"camel",
+	"dragon",
 };
 
 static char *body_size[] = {
@@ -830,6 +876,63 @@ static char *character_introduction[] = {
 	"[Hero] [HeroLastName] [did_something_innocuous]. [Hero] was a [heroprofession] headed for [space_locale].",
 };
 
+static char *gets_into[] = {
+	"gets into",
+	"climbs into",
+	"hops into",
+	"jumps into",
+};
+
+static char *land_vehicle[] = {
+	"land speeder",
+	"air car",
+	"cargo hauler",
+	"overland transport",
+};
+
+static char *begins_land_vehicle[] = {
+	"fires up the engines",
+	"heads out",
+	"throttles up the engines",
+	"engages the drive",
+	"hits the throttle",
+	"points it [towards] [herop] destination",
+};
+
+static char *land_vehicle_travel[] = {
+	"[hero] [gets_into] a [land_vehicle] and [begins_land_vehicle].",
+};
+
+static char *animalback_travel[] = {
+	"[hero] climbs onto the back of a [rideable_animal] and sets off",
+};
+
+static char *ambulating[] = {
+	"walking",
+	"running",
+	"hiking",
+	"walking at a brisk pace",
+};
+
+static char *ambulates[] = {
+	"walks",
+	"runs",
+	"hikes",
+	"walks at a brisk pace",
+};
+
+static char *towards[] = {
+	"towards",
+	"in the direction of",
+	"for",
+};
+
+static char *ambulating_travel[] = {
+	"[hero] begins [ambulating] [towards] [herop] destination",
+	"[hero] [ambulates] [towards] [herop] destination",
+	"[hero] sets off on foot [towards] [herop] destination",
+};
+
 struct macro common_words[] = {
 	{ "beginning", ARRAYSIZE(beginning), beginning },
 	{ "peaceful-happening", ARRAYSIZE(peaceful_happening), peaceful_happening },
@@ -879,6 +982,7 @@ struct macro common_words[] = {
 	{ "upholstered", ARRAYSIZE(upholstered), upholstered },
 	{ "luxurious", ARRAYSIZE(luxurious), luxurious },
 	{ "animal_hide", ARRAYSIZE(animal_hide), animal_hide },
+	{ "animalback_travel", ARRAYSIZE(animalback_travel), animalback_travel },
 	{ "gleaming", ARRAYSIZE(gleaming), gleaming },
 	{ "spaceshipwalls", ARRAYSIZE(spaceshipwalls), spaceshipwalls },
 	{ "beautiful_space_view", ARRAYSIZE(beautiful_space_view), beautiful_space_view },
@@ -902,6 +1006,7 @@ struct macro common_words[] = {
 	{ "simplespacedrink", ARRAYSIZE(simplespacedrink), simplespacedrink },
 	{ "amazing", ARRAYSIZE(amazing), amazing },
 	{ "animal", ARRAYSIZE(animal), animal },
+	{ "rideable_animal", ARRAYSIZE(rideable_animal), rideable_animal },
 	{ "profession", ARRAYSIZE(profession), profession },
 	{ "character_introduction", ARRAYSIZE(character_introduction), character_introduction },
 	{ "time_off", ARRAYSIZE(time_off), time_off },
@@ -911,6 +1016,20 @@ struct macro common_words[] = {
 	{ "spaceshipgauges", ARRAYSIZE(spaceshipgauges), spaceshipgauges },
 	{ "spaceshipdash", ARRAYSIZE(spaceshipdash), spaceshipdash },
 	{ "spaceshipsystem", ARRAYSIZE(spaceshipsystem), spaceshipsystem },
+	{ "spacecraft", ARRAYSIZE(spacecraft), spacecraft },
+	{ "boards", ARRAYSIZE(boards), boards },
+	{ "take_off", ARRAYSIZE(take_off), take_off },
+	{ "spaceship_travel_embark", ARRAYSIZE(spaceship_travel_embark), spaceship_travel_embark },
+	{ "spaceship_travel_disembark", ARRAYSIZE(spaceship_travel_disembark), spaceship_travel_disembark },
+	{ "disembarks", ARRAYSIZE(disembarks), disembarks },
+	{ "gets_into", ARRAYSIZE(gets_into), gets_into },
+	{ "land_vehicle", ARRAYSIZE(land_vehicle), land_vehicle },
+	{ "land_vehicle_travel", ARRAYSIZE(land_vehicle_travel), land_vehicle_travel },
+	{ "begins_land_vehicle", ARRAYSIZE(begins_land_vehicle), begins_land_vehicle },
+	{ "towards", ARRAYSIZE(towards), towards },
+	{ "ambulates", ARRAYSIZE(ambulates), ambulates },
+	{ "ambulating", ARRAYSIZE(ambulating), ambulating },
+	{ "ambulating_travel", ARRAYSIZE(ambulating_travel), ambulating_travel },
 };
 
 static char *fight_action1[] = {
@@ -919,7 +1038,7 @@ static char *fight_action1[] = {
 	"leaped on",
 	"grappled with",
 	"pushed",
-	"moved towards",
+	"moved [towards]",
 	"backed away from",
 	"looked warily at",
 	"looked warily at",
@@ -1022,7 +1141,7 @@ static char *bar_char[] = {
 };
 
 static char *spaceport_bar1[] = {
-	"It was dimly lit in the spaceport bar. As [p1p] eyes adjusted to the light, [p1] could make out "
+	"the dimly lit spaceport bar. As [p1p] eyes adjusted to the light, [p1] could make out "
 	"a variety of characters seated at the bar. Closest [bar_char]. Next, [bar_char]. "
 	"Finally, [bar_char]. A rough crowd.",
 };
@@ -1034,14 +1153,17 @@ static char *spaceship_interior[] = {
 	"{cargo_spaceship_cabin}",
 	"{pirate_spaceship_cabin}",
 #endif
-	"[spaceport_bar1]",
 };
 
-static char *planetary_location_name[] = {
+static char *planetary_outdoor_location_name[] = {
 	"[desert_plains]",
 	"[jungle]",
 	"[street]",
+};
+
+static char *planetary_indoor_location_name[] = {
 	"[interior_apartment]",
+	"[spaceport_bar1]",
 };
 
 static char *spaceport_location_name[] = {
@@ -1050,11 +1172,9 @@ static char *spaceport_location_name[] = {
 };
 
 static char *planetary_connection_via[] = {
-	"[land_speeder]",
-	"[cargo_hauler]",
-	"[walking]",
-	"[running]",
-	"[horseback]",
+	"[land_vehicle_travel]",
+	"[ambulating_travel]",
+	"[animalback_travel]",
 };
 
 static char *setting[] = {
@@ -1071,7 +1191,9 @@ static struct macro settings[] = {
 	{ "bar_char", ARRAYSIZE(bar_char), bar_char },
 	{ "sat_at_the_bar", ARRAYSIZE(sat_at_the_bar), sat_at_the_bar },
 	{ "luxurious_spaceship_cabin", ARRAYSIZE(luxurious_spaceship_cabin), luxurious_spaceship_cabin },
-	{ "planetary_location_name", ARRAYSIZE(planetary_location_name), planetary_location_name},
+	{ "planetary_outdoor_location_name", ARRAYSIZE(planetary_outdoor_location_name),
+				planetary_outdoor_location_name},
+	{ "planetary_indoor_location_name", ARRAYSIZE(planetary_indoor_location_name), planetary_indoor_location_name},
 	{ "spaceport_location_name", ARRAYSIZE(spaceport_location_name), spaceport_location_name},
 	{ "planetary_connection_via", ARRAYSIZE(planetary_connection_via), planetary_connection_via},
 };

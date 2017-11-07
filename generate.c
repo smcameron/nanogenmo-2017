@@ -64,6 +64,7 @@ struct location {
 	int nconnections;
 	float x, y, z; /* location used for calculating distances/proximity */
 	int planet; /* what planet this location is on */
+	int indoors;
 #define LOCATION_TYPE_SPACESHIP 0
 #define LOCATION_TYPE_SPACEPORT 1
 #define LOCATION_TYPE_PLANETARY 2
@@ -207,8 +208,15 @@ static void generate_planetary_location(int planet_number, int spaceport)
 		location[nlocations].name = expand_macros(name);
 		location[nlocations].type = LOCATION_TYPE_SPACEPORT;
 		location[nlocations].description = expand_macros("[spaceport_location_description]");
+		location[nlocations].indoors = 1;
 	} else {
-		sprintf(name, "[planetary_location_name] %d", nlocations);
+		if ((rand() % 100) < 30) {
+			sprintf(name, "[planetary_indoor_location_name] %d", nlocations);
+			location[nlocations].indoors = 1;
+		} else {
+			sprintf(name, "[planetary_outdoor_location_name] %d", nlocations);
+			location[nlocations].indoors = 0;
+		}
 		location[nlocations].name = expand_macros(name);
 		location[nlocations].type = LOCATION_TYPE_PLANETARY;
 		location[nlocations].description = expand_macros("[planetary_location_description]");
@@ -289,12 +297,12 @@ static void add_planetary_connection(int a, int b)
 	n = location[a].nconnections;
 	location[a].connection[n].to = b;
 	location[a].connection[n].from = a;
-	location[a].connection[n].via = expand_macros("[planetary_connection_via]");
+	location[a].connection[n].via = strdup("[planetary_connection_via]");
 	location[a].nconnections++;
 	n = location[b].nconnections;
 	location[b].connection[n].to = a;
 	location[b].connection[n].from = b;
-	location[b].connection[n].via = expand_macros("[planetary_connection_via]");
+	location[b].connection[n].via = strdup("[planetary_connection_via]");
 	location[b].nconnections++;
 }
 
@@ -400,11 +408,13 @@ static void setup_hero(int i)
 	clear_macro("common_words", "Hero");
 	clear_macro("common_words", "HeroLastName");
 	clear_macro("common_words", "hero3");
+	clear_macro("common_words", "hero");
 	clear_macro("common_words", "herop");
 	clear_macro("common_words", "heroself");
 	clear_macro("common_words", "heropp");
 	add_macro("common_words", "HeroLastName", cast[i].lastname);
 	add_macro("common_words", "Hero", cast[i].firstname);
+	add_macro("common_words", "hero", cast[i].firstname);
 	add_macro("common_words", "hero3", cast[i].third);
 	add_macro("common_words", "herop", cast[i].thirdp);
 	add_macro("common_words", "heroself", cast[i].thirdself);
@@ -429,12 +439,17 @@ static void move_character(int i, int pov)
 			printf("BUG: location %d has no connections but is not a spaceship\n",
 				cast[i].location);
 		}
-		do {
-			n = rand() % nlocations;
-		} while (location[n].type != LOCATION_TYPE_SPACEPORT);
-		from = cast[i].location;
-		to = n;
-		via = expand_macros("[spaceship_travel]");
+		if (rand() % 1000 < 300)  {
+			do {
+				n = rand() % nlocations;
+			} while (location[n].type != LOCATION_TYPE_SPACEPORT);
+			from = cast[i].location;
+			to = n;
+			via = expand_macros("[spaceship_travel_disembark]");
+		} else {
+			print("[herospaceshipthings]\n");
+			return;
+		}
 	} else {
 		if (location[cast[i].location].type == LOCATION_TYPE_SPACEPORT && rand() % 100 < 10) {
 			do {
@@ -442,7 +457,7 @@ static void move_character(int i, int pov)
 			} while (location[n].type != LOCATION_TYPE_SPACESHIP);
 			from = cast[i].location;
 			to = n;
-			via = expand_macros("[spaceship_travel]");
+			via = expand_macros("[spaceship_travel_embark]");
 		} else {
 			n = rand() % location[cast[i].location].nconnections;
 			from = location[cast[i].location].connection[n].from;
@@ -450,9 +465,12 @@ static void move_character(int i, int pov)
 			via = expand_macros(location[cast[i].location].connection[n].via);
 		}
 	}
-	if (pov == i)
-		printf("%s chooses to move from %s to %s via %s.\n", cast[i].firstname,
-			location[from].name, location[to].name, via);
+	if (pov == i) {
+		print(via);
+		printf(".\n");
+		printf("%s chooses to move from %s to %s.\n", cast[i].firstname,
+			location[from].name, location[to].name);
+	}
 	cast[i].location = to;
 	for (j = 0; j < MAXCHARS; j++) {
 		if (j == i)
