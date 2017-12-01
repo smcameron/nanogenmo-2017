@@ -9,7 +9,7 @@ So, here's some output:
 
 <blockquote>
 
-
+```
 Cast of Characters
 
 Corporal Marietta Reyna Gatlin (female)
@@ -48,6 +48,7 @@ Location 17: spaceship, the Zarmion Esteron, on planet 3, spaceship_location_des
 Location 18: spaceship, the Stargrazer Stella, on planet 2, spaceship_location_description
 Location 19: spaceship, the Starry Stareyes, on planet 0, spaceship_location_description
 Introduction
+```
 
 Brigid Dick was a asteroid miner from the inner arm of the Vorlon spiral. she liked to drink a Arcturan wine in her evenings.
 
@@ -86,6 +87,8 @@ Brigid chooses to move from the spaceport in Koznor to a show selling local frui
 Brigid sees that Lilian is also here.
 Brigid sees that Rachel is also here.
 Brigid wonders what time it is. Brigid ponders how to make a living. Brigid stares at the clock. Brigid pours a drink of vodka. Brigid thinks about travelling the galaxy
+
+
 Blanca Stratton was born in the neutral zone but considered herself to be from the far side of the Zarkon formation. Blanca was a navigator. 
 
 Blanca considers how things might have been different. Blanca takes a look at the clock. Blanca wants something better than this life, something exciting. Blanca thinks about travelling the galaxy
@@ -124,6 +127,8 @@ Blanca sets off on foot towards her destination.
 Blanca chooses to move from the governor's palace to outside the bar.
 Blanca climbs onto the back of a elephant and sets off.
 Blanca chooses to move from outside the bar to the Wollowella Intergalactic Spaceport.
+
+
 Lilian Marino was a scientist from the inner arm of the Vorlon spiral. she liked to drink a Dawnsnuffler in a capsule in her leisure time.
 
 Lilian stares out the window. Lilian can't do without a job. Lilian stares out the window. Lilian pours a drink of martini. Lilian thinks about how to get her life back together
@@ -167,6 +172,8 @@ Lilian sighed wistfully
 Lilian sets off on foot towards her destination.
 Lilian chooses to move from a field of norc plants to the jungles of Korboda.
 Lilian ponders the universe and what it all means. Lilian takes a look at the clock. Lilian really needs a way out of here to something better. Lilian thinks about dropping everything and hitting the road
+
+
 Christian William was born in parts unknown but considered himself to be from the Vekkazi nebula. Christian was a asteroid miner. 
 
 Christian empties the wastebasket. Christian stares at the clock. Christian really needs something better than this life, something exciting. Christian thinks about dropping everything and hitting the road
@@ -209,6 +216,8 @@ Christian empties the wastebasket. Christian looks at the clock. Christian needs
 Christian twiddled his thumbs
 Christian sneezed
 Christian considers how things might have been different. Christian stares out the window. Christian will go out of his mind without a way out of here to something better. Christian dreams about running away from it all
+
+
 Kiara Fox was a gambler from a planet in the near arm of the Norkunian galaxy. she liked to drink a juiced vorlon in her weekends.
 
 Kiara climbs onto the back of a horse and sets off.
@@ -255,6 +264,8 @@ Kiara begins walking in the direction of her destination.
 Kiara chooses to move from the junkyard to outside the bar.
 Kiara wonders what time it is. Kiara needs a job. Kiara wonders what time it is. Kiara thinks about a rum. Kiara thinks about how to get her life back together
 Kiara sighed wistfully
+
+
 Rachel Montano was a mechanic from Orion's nether regions. she liked to drink a pitcher of Wandering Zarkon in her time off.
 
 Rachel begins hiking towards her destination.
