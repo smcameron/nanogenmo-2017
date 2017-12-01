@@ -1260,18 +1260,69 @@ static char *spaceship_interior[] = {
 };
 
 static char *planetary_outdoor_location_name[] = {
-	"[desert_plains]",
-	"[jungle]",
-	"[street]",
+	"the Antean desert",
+	"the eastern part of the Nordan Mountains",
+	"the jungles of Korboda",
+	"a quiet, dusty street",
+	"a busy street",
+	"the shore of Lake Drogon",
+	"the edge of the grass plains",
+	"the edge of a small town",
+	"the forest of Horgon trees",
+	"the swamps of Torgo",
+	"the junkyard",
+	"a field of norc plants",
+	"outside the gun shop",
+	"outside the hangar",
+	"outside the bar",
+	"the street in front of the bar",
+	"the governor's palace",
 };
 
 static char *planetary_indoor_location_name[] = {
-	"[interior_apartment]",
+	"the interior of a small, dingy apartment",
+	"the local spaceship repair shop",
+	"a show selling local fruits and vegetables",
+	"the Lucky Spaceman Bar and Grill",
+	"the local Blasters-R-US gun store",
+	"Hanger 18",
+	"a small hut",
+	"a cave",
+	"the castle of Thormo",
+	"the fortress of Wandor",
+	"the palace of Snubon",
+	"the courtyard",
+	"a small hotel room",
+	"an ossio den",
+	"the shrine of Tooboo",
+	"the cemetery of Yono",
+	"the temple of Gren",
+	"the site of the wreck of the Kranos",
+	"the edge of the Sea of Anger",
+	"the edge of the lake of the Akorz",
+	"the summit of Mount Norbit",
+	"the base of Mount Ebla",
+	"the head of the trail of Sentoria",
+	"the edge of the city of Yanrovia",
 	"[spaceport_bar1]",
 };
 
+static char *large_spaceport[] = {
+	"the Trenolo Memorial Spaceport",
+	"the Hogon Interplanetary Spaceport",
+	"the Jerno Interplanetary Spaceport",
+	"the Wollowella Intergalactic Spaceport",
+	"the Jarboz-Newkron Pangalactic Spaceport",
+	"the old Kradon Interplanetary Spaceport",
+	"the bustling Oolonian Pan-Galactic Mega-Spaceport",
+	"the Reeno-Jeekrano Interplanetary Spaceport",
+	"the local planet-hopper spaceport",
+	"the spaceport in Nollo",
+	"the spaceport in Fallia",
+	"the spaceport in Koznor",
+};
+
 static char *spaceport_location_name[] = {
-	"[small_spaceport]",
 	"[large_spaceport]",
 };
 
@@ -1298,6 +1349,7 @@ static struct macro settings[] = {
 	{ "planetary_outdoor_location_name", ARRAYSIZE(planetary_outdoor_location_name),
 				planetary_outdoor_location_name},
 	{ "planetary_indoor_location_name", ARRAYSIZE(planetary_indoor_location_name), planetary_indoor_location_name},
+	{ "large_spaceport", ARRAYSIZE(large_spaceport), large_spaceport },
 	{ "spaceport_location_name", ARRAYSIZE(spaceport_location_name), spaceport_location_name},
 	{ "planetary_connection_via", ARRAYSIZE(planetary_connection_via), planetary_connection_via},
 };

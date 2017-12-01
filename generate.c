@@ -204,17 +204,17 @@ static void generate_planetary_location(int planet_number, int spaceport)
 	if (nlocations >= MAX_LOCATIONS)
 		return;
 	if (spaceport) {
-		sprintf(name, "[spaceport_location_name] %d", nlocations);
+		sprintf(name, "[spaceport_location_name]");
 		location[nlocations].name = expand_macros(name);
 		location[nlocations].type = LOCATION_TYPE_SPACEPORT;
 		location[nlocations].description = expand_macros("[spaceport_location_description]");
 		location[nlocations].indoors = 1;
 	} else {
 		if ((rand() % 100) < 30) {
-			sprintf(name, "[planetary_indoor_location_name] %d", nlocations);
+			sprintf(name, "[planetary_indoor_location_name]");
 			location[nlocations].indoors = 1;
 		} else {
-			sprintf(name, "[planetary_outdoor_location_name] %d", nlocations);
+			sprintf(name, "[planetary_outdoor_location_name]");
 			location[nlocations].indoors = 0;
 		}
 		location[nlocations].name = expand_macros(name);
