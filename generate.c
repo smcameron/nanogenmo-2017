@@ -236,7 +236,7 @@ static void generate_spaceship_location(void)
 
 	if (nlocations >= MAX_LOCATIONS)
 		return;
-	sprintf(name, "[spaceship_location_name] %d", nlocations);
+	sprintf(name, "[spaceship_location_name]");
 	location[nlocations].name = expand_macros(name);
 	location[nlocations].description = expand_macros("[spaceship_location_description]");
 	p = rand() % nplanets;
