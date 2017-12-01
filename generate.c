@@ -519,8 +519,8 @@ void dont_just_stand_there_do_something(int i, int pov)
 
 void simulate(void)
 {
-#define MOVES 200
-#define MOVES_PER_CHAR 10
+#define MOVES 2500
+#define MOVES_PER_CHAR 25
 	int i, j;
 	int pov = 0;
 
