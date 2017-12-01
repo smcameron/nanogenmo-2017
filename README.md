@@ -9,7 +9,7 @@ So, here's some output:
 
 <blockquote>
 
-```
+
 Cast of Characters
 
 Corporal Marietta Reyna Gatlin (female)
@@ -4144,6 +4144,5 @@ Christian chooses to move from the Wollowella Intergalactic Spaceport to the jun
 Christian sees that Rachel is also here.
 Christian begins walking at a brisk pace for his destination.
 Christian chooses to move from the junkyard to outside the bar.
-```
 
 </blockquote>
