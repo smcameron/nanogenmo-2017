@@ -2,8 +2,9 @@
 Nanogenmo 2017 -- November is National Novel (procedural) Generation Month
 
 Here it is December 1, 2017, and so it's time to upload a "novel", or at
-least the very long and boring account of some restless, dumb automatons
-moving aimlessly about a very rickety set.
+least the very long and boring account of some restless, dumb, drunk, depressed
+and bored automatons moving aimlessly, without reason or motivation, about their
+sad, cookie-cutter planets via various ridiculous conveyances.
 
 So, here's some output:
 
